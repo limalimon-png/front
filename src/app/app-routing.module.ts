@@ -8,13 +8,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
     canLoad:[UsuarioGuard]
   },
+  
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },{
     path:'',
     pathMatch:'full',
-    redirectTo:'login'
+    redirectTo:'main/tabs/tab1'
   }
 ];
 @NgModule({

@@ -22,12 +22,12 @@ export class UsuarioService {
     const data = { email, password };
 
     return new Promise(resolve => {
-      this.http.post(`${URL}/user/login`, data).subscribe(res => {
+      this.http.post(`${URL}/user/login`, data).subscribe(async res => {
         console.log(res);
         if (res['ok']) {
           console.log(res['ok'], 'en el true');
 
-          this.guardarToken(res['token']);
+          await this.guardarToken(res['token']);
           resolve(true);
         } else {
           console.log(res['ok'], 'en el false');
@@ -48,6 +48,8 @@ export class UsuarioService {
     this.token = token;
     await this.storage.set('token', token);
 
+    await this.comprobarToken();
+
   }
 
 
@@ -56,11 +58,11 @@ export class UsuarioService {
   crearUsuario(usuario: Usuario) {
 
     return new Promise(resolve => {
-      this.http.post(`${URL}/user/create`, usuario).subscribe(res => {
+      this.http.post(`${URL}/user/create`, usuario).subscribe(async res => {
         if (res['ok']) {
 
 
-          this.guardarToken(res['token']);
+    await      this.guardarToken(res['token']);
           resolve(true);
         } else {
 
@@ -88,17 +90,15 @@ export class UsuarioService {
     return new Promise<boolean>(resolve => {
 
       //metemos los datos del header
-      const encabezadoDeLaUri = new HttpHeaders({
+      const headers = new HttpHeaders({
         'x-token': this.token
       });
 
-      //añadimos el header a las opciones que tiene la peticion
-      const requestOptions = {
-        headers: encabezadoDeLaUri,
-      };
+      
+      
 
 
-      this.http.get(`${URL}/user/`, requestOptions).subscribe(respuesta => {
+      this.http.get(`${URL}/user/`, {headers}).subscribe(respuesta => {
         if (respuesta['ok']) {
           this.usuario = respuesta['usuario']
           resolve(true)
@@ -154,6 +154,15 @@ export class UsuarioService {
 
 
     });
+
+  }
+
+  //cerrar sesion
+  logout(){
+    this.token=null;
+    this.usuario=null;
+    this.storage.clear();
+    this.navController.navigateRoot('/login',{animated:true});
 
   }
 }

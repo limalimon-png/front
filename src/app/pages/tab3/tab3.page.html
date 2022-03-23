@@ -31,7 +31,7 @@
 
   <!-- <app-avatar-selector></app-avatar-selector> -->
 
-  <form>
+  <form (ngSubmit)="actualizar( fActualizar )" #fActualizar="ngForm">
       <ion-row>
         <ion-col>
           
@@ -41,14 +41,14 @@
                 <ion-label>Email</ion-label>
                 <ion-input name="email"
                            type="email"
-                           required></ion-input>
+                           required [(ngModel)]="usuario.email"></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label>Nombre</ion-label>
                 <ion-input name="nombre"
                            type="text"
-                           required></ion-input>
+                           required [(ngModel)]="usuario.nombre"></ion-input>
               </ion-item>
 
 

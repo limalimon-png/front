@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Usuario } from 'src/app/interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
 import { AlertasService } from '../../services/alertas.service';
+import { PeticionesService } from '../../services/peticiones.service';
 
 @Component({
   selector: 'app-tab3',
@@ -12,7 +13,8 @@ import { AlertasService } from '../../services/alertas.service';
 export class Tab3Page implements OnInit{
 usuario :Usuario={}
   constructor(private userService:UsuarioService,
-    private alertService:AlertasService
+    private alertService:AlertasService,
+    private peticionesService:PeticionesService
     ) {}
   ngOnInit(): void {
    this.usuario=this.userService.getUsuario();
@@ -38,6 +40,9 @@ usuario :Usuario={}
   }
 
 
-  logout(){}
+  logout(){
+    this.peticionesService.paginaPost=0;
+    this.userService.logout();
+  }
 
 }

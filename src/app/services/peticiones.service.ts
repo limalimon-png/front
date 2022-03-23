@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
+
 import { environment } from '../../environments/environment';
-import { Respuesta } from '../interfaces/interfaces';
+import { Post, Respuesta } from '../interfaces/interfaces';
 import { UsuarioService } from './usuario.service';
 
 @Injectable({
@@ -10,6 +11,7 @@ import { UsuarioService } from './usuario.service';
 export class PeticionesService {
   URL =environment.url;
   paginaPost=0;
+  nuevaPublicacion=new EventEmitter<Post>()
 
   constructor(private http:HttpClient,private userService:UsuarioService) { }
 
@@ -27,9 +29,20 @@ export class PeticionesService {
     const requestOptions = {
       headers: headers,
     };
-    this.http.post(`${this.URL}/posts`,post,{headers}).subscribe(respuesta=>{
-      console.log(respuesta);
-      
+
+
+    return new Promise(resolve=>{
+
+      this.http.post(`${this.URL}/posts`,post,{headers}).subscribe(respuesta=>{
+        console.log(respuesta);
+        this.nuevaPublicacion.emit(respuesta['post'])
+        resolve(true);
+        
+      })
+
+
     })
   }
+
+
 }

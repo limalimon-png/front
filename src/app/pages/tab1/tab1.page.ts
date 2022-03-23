@@ -16,6 +16,9 @@ export class Tab1Page implements OnInit {
   constructor(private peticion:PeticionesService) {}
   ngOnInit() {
   this.loadData();
+  this.peticion.nuevaPublicacion.subscribe(publicacion=>{
+    this.posts.unshift(publicacion);
+  })
   }
 
 

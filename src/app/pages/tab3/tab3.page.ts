@@ -37,4 +37,7 @@ usuario :Usuario={}
     }
   }
 
+
+  logout(){}
+
 }

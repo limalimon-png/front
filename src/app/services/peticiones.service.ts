@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable,EventEmitter } from '@angular/core';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 
 import { environment } from '../../environments/environment';
 import { Post, Respuesta } from '../interfaces/interfaces';
@@ -13,7 +14,10 @@ export class PeticionesService {
   paginaPost=0;
   nuevaPublicacion=new EventEmitter<Post>()
 
-  constructor(private http:HttpClient,private userService:UsuarioService) { }
+  constructor(private http:HttpClient,
+    private userService:UsuarioService,
+    private fileTransfer:FileTransfer
+    ) { }
 
   getPosts(refresh:boolean=false){
     if(refresh)this.paginaPost=0;
@@ -42,6 +46,27 @@ export class PeticionesService {
 
 
     })
+  }
+
+
+  subirArchivo(file:string){
+    const options:FileUploadOptions={
+      fileKey:'image',
+      headers:{
+        'x-token':this.userService.token
+      }
+    }
+
+
+    const fileTransfer:FileTransferObject=this.fileTransfer.create();
+
+    fileTransfer.upload(file,`${this.URL}/posts/upload`,options).then(data=>{
+      console.log(data);
+
+    }).catch(error=>{
+      console.log("error",error);
+      
+    });
   }
 
 

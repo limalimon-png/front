@@ -45,17 +45,24 @@
     </ion-col>
     <ion-col size="6">
       <ion-button expand="full"
-                  shape="round">
-        <ion-icon slot="start" name="images"></ion-icon>
+                  shape="round"
+                  (click)="galeria()">
+        <ion-icon slot="start" name="images" ></ion-icon>
         Galería
       </ion-button>
     </ion-col>
   </ion-row>
 
   <ion-row>
-    <ion-col size="3" *ngFor="let image of tempImages">
+    <ion-col  size="3" *ngFor="let image of tempImages">
       <ion-card>
-        <img src="">
+        <img   [src]="image |imagenSanitazer">
+        
+      </ion-card>
+      <ion-card>
+        
+        <video class="tumbail" [src]="image" >Tu navegador no admite el elemento <code>video</code>.
+        </video>
       </ion-card>
     </ion-col>
   </ion-row>

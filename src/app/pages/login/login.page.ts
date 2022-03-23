@@ -4,7 +4,8 @@ import { IonSlides, NavController } from '@ionic/angular';
 import { element } from 'protractor';
 import { AlertasService } from '../../services/alertas.service';
 import { Usuario } from 'src/app/interfaces/interfaces';
-
+import { Camera,CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+declare var window:any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -69,7 +70,8 @@ export class LoginPage implements OnInit {
   }
   constructor(private usuarioService:UsuarioService,
     private navCtrl:NavController,
-    private alertasService:AlertasService
+    private alertasService:AlertasService,
+    private camera: Camera,
     ) { }
 
   ngOnInit() {
@@ -82,7 +84,7 @@ export class LoginPage implements OnInit {
    const valido= await this.usuarioService.login(this.loginUser.email,this.loginUser.password);
    console.log();
    
-    
+   this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
    if(valido){
      //entra
      this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
@@ -132,4 +134,11 @@ export class LoginPage implements OnInit {
     this.slidePadre.lockSwipes(true);
 
 }
+
+
+
+  
+    
 }
+
+

@@ -51,7 +51,7 @@ usuario :Usuario={}
     
     
     this.peticionesService.getPublicacionesPerfil(this.usuario._id).subscribe(publicaciones=>console.log(publicaciones)
-    )
+    );
       
       
       

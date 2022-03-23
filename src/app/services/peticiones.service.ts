@@ -69,5 +69,5 @@ export class PeticionesService {
     });
   }
 
-
+//localhost:3000/posts/perfil/620cb0486e46615daab2e754
 }

@@ -19,6 +19,7 @@ usuario :Usuario={}
   ngOnInit(): void {
    this.usuario=this.userService.getUsuario();
    console.log(this.usuario);
+   this.mostrarPublicaciones();
    //para luego mpodificar los datos de dentro usaremos en el input un [(ngmodel)]
    
   }
@@ -43,6 +44,18 @@ usuario :Usuario={}
   logout(){
     this.peticionesService.paginaPost=0;
     this.userService.logout();
+  }
+
+
+  mostrarPublicaciones(){
+    
+    
+    this.peticionesService.getPublicacionesPerfil(this.usuario._id).subscribe(publicaciones=>console.log(publicaciones)
+    )
+      
+      
+      
+    
   }
 
 }

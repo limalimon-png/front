@@ -19,11 +19,19 @@
     <ion-slide 
     *ngFor="let img of post.img"
     class="image-slide" [style]="(img |imagen:post.usuario._id)|domSanitizer"> 
+    <div id="cabecera">
+      <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video>
+    
+     </div>
     </ion-slide>
     
   </ion-slides>
   <ion-slides  mode="ios" *ngIf="post.img.length===1">
     <ion-slide class="image-slide" [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer"> 
+      <div id="cabecera">
+        <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video>
+      
+       </div>
     </ion-slide>
     
   </ion-slides>

@@ -16,7 +16,11 @@ const routes: Routes = [
     path:'',
     pathMatch:'full',
     redirectTo:'main/tabs/tab1'
+  },  {
+    path: 'popover-perfil',
+    loadChildren: () => import('./pages/popover-perfil/popover-perfil.module').then( m => m.PopoverPerfilPageModule)
   }
+
 ];
 @NgModule({
   imports: [

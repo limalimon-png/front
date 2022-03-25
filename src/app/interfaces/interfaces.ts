@@ -3,6 +3,11 @@ export interface Respuesta {
     pagina:number;
     posts: Post[];
 }
+export interface RespuestaPerfil {
+    ok:    boolean;
+    posts: Post[];
+    userId:string
+}
 
 export interface Post {
     _id?:     string;

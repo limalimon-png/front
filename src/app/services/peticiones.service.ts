@@ -3,7 +3,7 @@ import { Injectable,EventEmitter } from '@angular/core';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 
 import { environment } from '../../environments/environment';
-import { Post, Respuesta } from '../interfaces/interfaces';
+import { Post, Respuesta, RespuestaPerfil } from '../interfaces/interfaces';
 import { UsuarioService } from './usuario.service';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class PeticionesService {
 
   getPublicacionesPerfil(id:string){
     
-    return this.http.get(`${this.URL}/posts/perfil/${id}`);
+    return this.http.get<RespuestaPerfil>(`${this.URL}/posts/perfil/${id}`);
  
   }
 //localhost:3000/posts/perfil/620cb0486e46615daab2e754

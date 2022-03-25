@@ -4,13 +4,17 @@ import { PostComponent } from './post/post.component';
 import { PostsComponent } from './posts/posts.component';
 import { IonicModule } from '@ionic/angular';
 import { PipesModule } from '../pipes/pipes.module';
+import { PostPerfilComponent } from './post-perfil/post-perfil.component';
+import { PostsPerfilComponent } from './posts-perfil/posts-perfil.component';
 
 
 
 @NgModule({
   declarations: [
     PostComponent,
-    PostsComponent
+    PostsComponent,
+    PostPerfilComponent,
+    PostsPerfilComponent
 
   ],
   imports: [
@@ -21,7 +25,9 @@ import { PipesModule } from '../pipes/pipes.module';
   ],
   exports:[
     PostComponent,
-    PostsComponent
+    PostsComponent,
+    PostPerfilComponent,
+    PostsPerfilComponent
   ]
 })
 export class ComponentsModule { }

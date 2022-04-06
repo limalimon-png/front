@@ -17,6 +17,7 @@ export interface Post {
     usuario?: Usuario;
     created?: Date;
     __v?:     number;
+    guardado?:boolean;
 }
 
 

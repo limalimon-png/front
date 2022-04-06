@@ -6,6 +6,7 @@ import { AlertasService } from '../../services/alertas.service';
 import { PeticionesService } from '../../services/peticiones.service';
 import { ModalController } from '@ionic/angular';
 import { PopoverPerfilPage } from '../popover-perfil/popover-perfil.page';
+import { GuardadosService } from '../../services/guardados.service';
 
 @Component({
   selector: 'app-tab3',
@@ -19,17 +20,23 @@ pestania=1;
 posts:Post[]=[];
 media:Post[]=[];
 msj:Post[]=[];
+guardados:Post[]=[];
   scrollable=true;
   constructor(private userService:UsuarioService,
-    
+    private publicacionesGuardadas:GuardadosService,
     private peticionesService:PeticionesService,
     private modalController:ModalController
     ) {}
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
    this.usuario=this.userService.getUsuario();
    console.log(this.usuario);
    this.mostrarPublicaciones();
-   //para luego mpodificar los datos de dentro usaremos en el input un [(ngmodel)]
+   
+   await this.publicacionesGuardadas.cargarFavoritos().then(
+    pelis=>this.guardados=pelis
+  );
+  console.log(this.guardados);
+  //para luego mpodificar los datos de dentro usaremos en el input un [(ngmodel)]
 
 
    //para las publicaciones del perfil

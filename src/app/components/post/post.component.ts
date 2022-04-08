@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
       this.post.guardado=true;
     }else{
       this.iconoGuardado ='bookmark-outline';
-      this.post.guardado=false;
+      this.post.guardado=false;   
       
     }
      // // this.pagFavoritos=new Tab3Page(this.datalocal);

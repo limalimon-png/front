@@ -76,16 +76,13 @@ export class GuardadosService {
     const peliculas= await this._storage.get('posts');
     this.postGuardado=peliculas || [];
     return this.postGuardado;
-
   }
 
 
   async existePelicula(id){
-  
     await this.cargarFavoritos();
     const existe =this.postGuardado.find( peli => peli._id===id);
     return !!existe
-
   }
 
 }

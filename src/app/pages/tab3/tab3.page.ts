@@ -27,8 +27,14 @@ guardados:Post[]=[];
     private peticionesService:PeticionesService,
     private modalController:ModalController
     ) {}
-  async ngOnInit(): Promise<void> {
-   this.usuario=this.userService.getUsuario();
+  async ngOnInit() {
+      
+   this.usuario= this.userService.getUsuario();
+
+   this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+   ;
+   
+
    console.log(this.usuario);
    this.mostrarPublicaciones();
    

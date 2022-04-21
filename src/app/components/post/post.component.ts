@@ -2,6 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Post } from 'src/app/interfaces/interfaces';
 import { GuardadosService } from '../../services/guardados.service';
 
+import { Router } from '@angular/router';
+import { UsuarioService } from '../../services/usuario.service';
+
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -13,7 +17,7 @@ export class PostComponent implements OnInit {
   img='/assets/perro-1.jpg';
   img2='/assets/perro-2.jpg';
   img3='/assets/perro-3.jpg';
-  constructor(private datalocal:GuardadosService) { }
+  constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService) { }
 
   ngOnInit() {
    this.datalocal.existePelicula(this.post._id).then(dato=>{
@@ -36,6 +40,11 @@ export class PostComponent implements OnInit {
      // // this.pagFavoritos=new Tab3Page(this.datalocal);
     // // this.pagFavoritos.probar();
     
+  }
+
+  route(){
+    this.us.setEmail(this.post.usuario.email);
+    this.ruta.navigate(['/perfil-amigo'])
   }
 
 }

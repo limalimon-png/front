@@ -23,8 +23,11 @@ export class PopoverPerfilPage implements OnInit {
     private peticionesService:PeticionesService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.usuario=this.userService.getUsuario();
+    this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+    console.log(this.imagen);
+    
    console.log(this.usuario);
   }
 

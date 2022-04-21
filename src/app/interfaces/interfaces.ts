@@ -8,6 +8,11 @@ export interface RespuestaPerfil {
     posts: Post[];
     userId:string
 }
+export interface iconoPerfil {
+    ok:    boolean;
+    imagen: string;
+    userId:string
+}
 
 export interface Post {
     _id?:     string;

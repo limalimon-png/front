@@ -19,6 +19,10 @@ const routes: Routes = [
   },  {
     path: 'popover-perfil',
     loadChildren: () => import('./pages/popover-perfil/popover-perfil.module').then( m => m.PopoverPerfilPageModule)
+  },
+  {
+    path: 'perfil-amigo',
+    loadChildren: () => import('./pages/perfil-amigo/perfil-amigo.module').then( m => m.PerfilAmigoPageModule)
   }
 
 ];

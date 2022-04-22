@@ -10,7 +10,7 @@ import { UsuarioService } from '../../services/usuario.service';
   styleUrls: ['./perfil-amigo.page.scss'],
 })
 export class PerfilAmigoPage implements OnInit {
-email:string;
+
 usuario :Usuario={}
 //para las publicaciones:
 pestania=1;
@@ -20,17 +20,17 @@ msj:Post[]=[];
 guardados:Post[]=[];
   scrollable=true;
   constructor(private us:UsuarioService,
-    
+    //pasar el usuario por el get del email
     private peticionesService:PeticionesService,
     private modalController:ModalController) { }
 
   async ngOnInit() {
-    this.email=this.us.getEmail();
-    console.log(this.email);
+    
+  
 
-    this.usuario= this.us.getUsuario();
+    this.usuario= await this.us.getUserAmigo();
 
-   this.usuario.imagen=await this.us.getFotoPerfil(this.usuario._id);
+   //this.usuario.imagen=this.usuario.imagen
    ;
    
 
@@ -57,14 +57,14 @@ guardados:Post[]=[];
     mostrarPublicaciones(){
         
         
-        this.peticionesService.getPublicacionesPerfilPorEmail(this.email).subscribe(publicaciones=>console.log(publicaciones)
+        this.peticionesService.getPublicacionesPerfil(this.usuario._id).subscribe(publicaciones=>console.log(publicaciones)
         );   
         
       }
     
       //para las publicaciones
       loadData() {
-        this.peticionesService.getPublicacionesPerfilPorEmail(this.email).subscribe(a=>{
+        this.peticionesService.getPublicacionesPerfil(this.usuario._id).subscribe(a=>{
           console.log(a);
           this.posts.push(...a.posts.filter(f=> f.img.length !=0));
           this.msj.push(...a.posts.filter(f=> f.img.length ==0));

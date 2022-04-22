@@ -43,7 +43,7 @@ export class PostComponent implements OnInit {
   }
 
   route(){
-    this.us.setEmail(this.post.usuario.email);
+    this.us.setUserAmigo(this.post.usuario);
     this.ruta.navigate(['/perfil-amigo'])
   }
 

@@ -23,7 +23,7 @@
         <ion-row>
           <ion-item lines="none">
             <ion-avatar slot="start">
-              <img src="{{usuario.imagen }}" />
+              <img [src]="usuario.imagen " />
             </ion-avatar>
             <ion-label>
               <h3><strong>{{usuario.nombre}}</strong></h3>
@@ -34,7 +34,8 @@
           </ion-item>
         </ion-row>
         <ion-row>
-          <ion-card-subtitle>.............descripcion del perfil.........</ion-card-subtitle>
+          <!-- <ion-card-subtitle *ngIf="usuario.desc=='Introduce la descripción'">.............descripcion del perfil.........</ion-card-subtitle> -->
+          <ion-card-subtitle >.............{{usuario.desc}}.........</ion-card-subtitle>
         </ion-row>
       </ion-grid>
      

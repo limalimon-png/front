@@ -24,9 +24,12 @@ export class PopoverPerfilPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    
+    
     this.usuario=this.userService.getUsuario();
     this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
     console.log(this.imagen);
+    console.log(this.usuario.desc);
     
    console.log(this.usuario);
   }
@@ -34,12 +37,18 @@ export class PopoverPerfilPage implements OnInit {
   //poner la validaxion que cree en la otra app
   async actualizar(parametros:NgForm){
     if(parametros.invalid){return}
+    this.usuario.imagen=this.imagen;
+    console.log(this.usuario.imagen);
+    
     const actualizado =await this.userService.actualizarUsuario(this.usuario);
+    
     console.log(actualizado);
     
     if(actualizado){
       //se actualizo
       this.alertService.presentToast("se actualizo")
+    
+     
     }else{
       //no se pudieron guardar cambios
       this.alertService.presentToast("no se pudieron guardar los cambios")
@@ -51,6 +60,8 @@ export class PopoverPerfilPage implements OnInit {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
+      rule:true
+      
  
     });
   }

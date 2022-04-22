@@ -15,6 +15,7 @@ import { GuardadosService } from '../../services/guardados.service';
 })
 export class Tab3Page implements OnInit{
 usuario :Usuario={}
+imagen;
 //para las publicaciones:
 pestania=1;
 posts:Post[]=[];
@@ -27,11 +28,14 @@ guardados:Post[]=[];
     private peticionesService:PeticionesService,
     private modalController:ModalController
     ) {}
+
+  
   async ngOnInit() {
       
    this.usuario= this.userService.getUsuario();
 
    this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+  
    ;
    
 
@@ -72,16 +76,28 @@ guardados:Post[]=[];
   }
 
   async editarPerfil() {
+   
+    
+    
     const modal = await this.modalController.create({
       component: PopoverPerfilPage,
-      cssClass: 'my-custom-class',
-      componentProps: {
-        'firstName': 'Douglas',
-        'lastName': 'Adams',
-        'middleInitial': 'N'
-      }
+      
     });
-    return await modal.present();
+    modal.onDidDismiss().then(async ()=>{
+      this.usuario=await this.userService.getUsuario();
+      this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+      
+
+    });
+  
+     return await modal.present();
+     
+     
+     
+  
+  
+    
+    
   }
 
 

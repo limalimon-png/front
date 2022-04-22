@@ -15,11 +15,11 @@ declare var window:any;
 export class LoginPage implements OnInit {
 
   @ViewChild('slidePadre', {static: true}) slidePadre:IonSlides;
-  imagen:string='' ;
+  imagen:string='https://statics-cuidateplus.marca.com/cms/styles/ratio_1_1/azblob/comprar-patatas.jpg' ;
 
   avatars = [
     {
-      img: 'av-2.png',
+      img: '/assets/avatars/av-2.png',
       seleccionado: true
     },
     {

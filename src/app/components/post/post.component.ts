@@ -13,6 +13,7 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class PostComponent implements OnInit {
   iconoGuardado='bookmark-outline';
+  iconoLike='heart-outline'
   @Input() post:Post={};
   img='/assets/perro-1.jpg';
   img2='/assets/perro-2.jpg';
@@ -44,7 +45,11 @@ export class PostComponent implements OnInit {
 
   route(){
     this.us.setUserAmigo(this.post.usuario);
-    this.ruta.navigate(['/perfil-amigo'])
+    this.ruta.navigate(['/perfil-amigo']);
+  }
+
+  like(){
+
   }
 
 }

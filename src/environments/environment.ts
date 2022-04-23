@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   
  // url:'https://data.mongodb-api.com/app/data-jmeie/endpoint/data/beta'
-url:'http://192.168.0.22:3000'
- // url:'http://localhost:3000'
+//url:'http://192.168.0.22:3000'
+  url:'http://localhost:3000'
 };
 
 /*

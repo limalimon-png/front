@@ -12,7 +12,7 @@
   <ion-row class="top-20">
     
     <ion-col size="12" text-center>
-      <img src="assets/avatars/av-8.png" class="img-avatar">
+      <img [src]="imagen" class="img-avatar" (click)="galeria()">
     </ion-col>
 
   </ion-row>
@@ -46,6 +46,12 @@
                 <ion-input name="nombre"
                            type="text"
                            required [(ngModel)]="usuario.nombre"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Descripción</ion-label>
+                <ion-input name="desc"
+                           type="text"
+                           required [(ngModel)]="usuario.desc"></ion-input>
               </ion-item>
 
 

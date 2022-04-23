@@ -75,5 +75,10 @@ export class PeticionesService {
     return this.http.get<RespuestaPerfil>(`${this.URL}/posts/perfil/${id}`);
  
   }
+  getPublicacionesPerfilPorEmail(email:string){
+    
+    return this.http.get<RespuestaPerfil>(`${this.URL}/posts/perfilGente/${email}`);
+ 
+  }
 //localhost:3000/posts/perfil/620cb0486e46615daab2e754
 }

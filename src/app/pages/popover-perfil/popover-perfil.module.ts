@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PopoverPerfilPageRoutingModule } from './popover-perfil-routing.module';
 
 import { PopoverPerfilPage } from './popover-perfil.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PopoverPerfilPageRoutingModule
+    PopoverPerfilPageRoutingModule,
+    PipesModule
   ],
   declarations: [PopoverPerfilPage]
 })

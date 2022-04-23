@@ -2,9 +2,9 @@
 <div class="post">
 
 
-  <ion-item lines="none">
+  <ion-item lines="none" (click)="route()">
     <ion-avatar slot="start">
-      <img src="/assets/avatars/{{post.usuario.imagen}}" />
+      <img src="{{post.usuario.imagen}}" />
     </ion-avatar>
     <ion-label>
       <h3>{{post.usuario.nombre}}</h3>
@@ -37,8 +37,8 @@
   </ion-slides>
 
   <ion-item>
-    <ion-icon slot="start" name="heart-outline"></ion-icon>
-    <ion-icon slot="end" name="bookmark-outline"></ion-icon>
+    <ion-icon slot="start" [name]="post ?'heart-outline':'heart'" (click)="like()"></ion-icon>
+    <ion-icon slot="end" [name]="post.guardado?'bookmark':'bookmark-outline'" (click)="guardar()"></ion-icon>
   </ion-item>
   <ion-item lines="none">
     <ion-label text-wrap>{{post.mensaje}}</ion-label>

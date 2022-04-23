@@ -6,6 +6,7 @@ import { AlertasService } from '../../services/alertas.service';
 import { PeticionesService } from '../../services/peticiones.service';
 import { ModalController } from '@ionic/angular';
 import { PopoverPerfilPage } from '../popover-perfil/popover-perfil.page';
+import { GuardadosService } from '../../services/guardados.service';
 
 @Component({
   selector: 'app-tab3',
@@ -14,22 +15,38 @@ import { PopoverPerfilPage } from '../popover-perfil/popover-perfil.page';
 })
 export class Tab3Page implements OnInit{
 usuario :Usuario={}
+imagen;
 //para las publicaciones:
 pestania=1;
 posts:Post[]=[];
 media:Post[]=[];
 msj:Post[]=[];
+guardados:Post[]=[];
   scrollable=true;
   constructor(private userService:UsuarioService,
-    
+    private publicacionesGuardadas:GuardadosService,
     private peticionesService:PeticionesService,
     private modalController:ModalController
     ) {}
-  ngOnInit(): void {
-   this.usuario=this.userService.getUsuario();
+
+  
+  async ngOnInit() {
+      
+   this.usuario= this.userService.getUsuario();
+
+   this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+  
+   ;
+   
+
    console.log(this.usuario);
    this.mostrarPublicaciones();
-   //para luego mpodificar los datos de dentro usaremos en el input un [(ngmodel)]
+   
+   await this.publicacionesGuardadas.cargarFavoritos().then(
+    pelis=>this.guardados=pelis
+  );
+  console.log(this.guardados);
+  //para luego mpodificar los datos de dentro usaremos en el input un [(ngmodel)]
 
 
    //para las publicaciones del perfil
@@ -59,16 +76,28 @@ msj:Post[]=[];
   }
 
   async editarPerfil() {
+   
+    
+    
     const modal = await this.modalController.create({
       component: PopoverPerfilPage,
-      cssClass: 'my-custom-class',
-      componentProps: {
-        'firstName': 'Douglas',
-        'lastName': 'Adams',
-        'middleInitial': 'N'
-      }
+      
     });
-    return await modal.present();
+    modal.onDidDismiss().then(async ()=>{
+      this.usuario=await this.userService.getUsuario();
+      this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+      
+
+    });
+  
+     return await modal.present();
+     
+     
+     
+  
+  
+    
+    
   }
 
 

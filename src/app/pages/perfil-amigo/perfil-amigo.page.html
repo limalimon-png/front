@@ -1,14 +1,11 @@
-<ion-header no-border>
+<ion-header>
   <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()"
-                  color="danger">
-        <ion-icon slot="icon-only" name="exit"></ion-icon>
-      </ion-button>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
+    <ion-title>perfilAmigo</ion-title>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content>
 
@@ -23,10 +20,11 @@
         <ion-row>
           <ion-item lines="none">
             <ion-avatar slot="start">
-              <img [src]="usuario.imagen " />
+              <img src="{{usuario.imagen }}" />
             </ion-avatar>
             <ion-label>
               <h3><strong>{{usuario.nombre}}</strong></h3>
+              
               <!-- <h3>{{usuario.email}}</h3> -->
         
             </ion-label>
@@ -34,20 +32,14 @@
           </ion-item>
         </ion-row>
         <ion-row>
-          <!-- <ion-card-subtitle *ngIf="usuario.desc=='Introduce la descripción'">.............descripcion del perfil.........</ion-card-subtitle> -->
-          <ion-card-subtitle >.............{{usuario.desc}}.........</ion-card-subtitle>
+          <ion-card-subtitle>.............{{usuario.desc}}.........</ion-card-subtitle>
         </ion-row>
       </ion-grid>
      
     
     </ion-list>
   </div>
-<ion-card>
-  
-  <ion-button (click)="editarPerfil()" expand="block" fill="clear" shape="round">
-    editar perfil
-  </ion-button>
-</ion-card>
+
 
 
 <ion-item>
@@ -62,16 +54,7 @@
     <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
     <ion-label> </ion-label>
   </ion-chip>
-  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(3)">
-    <ion-label> </ion-label>
-    <ion-icon name="heart-outline"></ion-icon>
-    <ion-label> </ion-label>
-  </ion-chip>
-  <ion-chip color="primary" mode="ios" outline="true"(click)="opcionPerfil(4)">
-    <ion-label> </ion-label>
-    <ion-icon name="bookmark-outline"></ion-icon>
-    <ion-label> </ion-label>
-  </ion-chip>
+  
 </div>
 </ion-item>
 
@@ -89,7 +72,7 @@
 <!-- post -->
 <app-posts [posts]="posts" *ngIf="pestania==1"></app-posts>
 <app-posts [posts]="msj"*ngIf="pestania==2"></app-posts>
-<app-posts [posts]="guardados"*ngIf="pestania==4"></app-posts>
+
 
 
 

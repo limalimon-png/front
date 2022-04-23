@@ -51,21 +51,32 @@
       <ion-grid fixed>
         <ion-row>
           <ion-col>
-            <h3>Seleccione Avatar</h3>
+            <h3>Seleccione foto de perfil</h3>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
             <ion-slides [options]="opcionesAvatar">
-              <ion-slide *ngFor="let avatar of avatars" >
-                <ion-img
-                  class="pick-avatar"
-                  src="/assets/avatars/{{avatar.img}}"
-                  [ngClass]="{'pick-avatar-seleccionado':avatar.seleccionado}"
-                  (click)="seleccionarAvatar(avatar)"
+              
+              <ion-slide  class="center" >
+                <img *ngIf="imagen!=''"  [src]="imagen |imagenSanitazer" >
+                <ion-img *ngIf="imagen==''"
+                class="pick-avatar"
+                  src="/assets/avatars/av-2.png"
+                  [ngClass]="{'pick-avatar-seleccionado':avatars[0].seleccionado}"
+                  (click)="seleccionarAvatar(avatars[0])"
                 ></ion-img>
               </ion-slide>
+              <ion-slide class="center" >
+                <ion-img
+                  class="pick-avatar"
+                  src="/assets/avatars/av-3.png"
+                  [ngClass]="{'pick-avatar-seleccionado':avatars[1].seleccionado}"
+                  (click)="seleccionarAvatar(avatars[1])"
+                ></ion-img>
+              </ion-slide>
+              
             </ion-slides>
           </ion-col>
         </ion-row>

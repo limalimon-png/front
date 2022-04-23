@@ -7,7 +7,8 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
-
+import { GuardadosService } from '../../services/guardados.service';
+import { Storage } from '@ionic/storage'
 @NgModule({
   imports: [
     IonicModule,
@@ -17,6 +18,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     Tab1PageRoutingModule
     ,ComponentsModule
   ],
-  declarations: [Tab1Page]
+  declarations: [Tab1Page],
+  providers:[Storage]
 })
 export class Tab1PageModule {}

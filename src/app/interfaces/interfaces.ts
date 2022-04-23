@@ -8,15 +8,21 @@ export interface RespuestaPerfil {
     posts: Post[];
     userId:string
 }
+export interface iconoPerfil {
+    ok:    boolean;
+    imagen: string;
+    userId:string
+}
 
 export interface Post {
     _id?:     string;
     mensaje?: string;
     img?:     string[];
-    coords?:  string;
+    likes?:  number;
     usuario?: Usuario;
     created?: Date;
     __v?:     number;
+    guardado?:boolean;
 }
 
 
@@ -25,8 +31,16 @@ export interface Usuario {
     nombre?:  string;
     imagen?:  string;
     email?:   string;
+    desc?:    string;
     __v?:     number;
     password?:string;
 }
+
+export interface getUsuario {
+    ok?:     boolean;
+    userid?:  string;
+    user:Usuario;
+}
+
 
 

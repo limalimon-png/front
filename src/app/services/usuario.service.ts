@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment.prod';
 import { promise } from 'protractor';
-import { Usuario } from '../interfaces/interfaces';
+import { iconoPerfil, Usuario, getUsuario } from '../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
 const URL = environment.url;
 @Injectable({
@@ -12,6 +12,8 @@ const URL = environment.url;
 export class UsuarioService {
   token: string = null;
   private usuario: Usuario = {}
+  private emailPerfil :string;
+  userAmigo:Usuario;
 
   constructor(private http: HttpClient, private storage: Storage, private navController: NavController) {
     this.storage.create();
@@ -165,4 +167,58 @@ export class UsuarioService {
     this.navController.navigateRoot('/login',{animated:true});
 
   }
+
+  async getFotoPerfil(id:string){
+
+
+
+    return new Promise<string>(resolve => {
+
+     
+
+
+      this.http.get<iconoPerfil>(`${URL}/user/geticon/${id}`).subscribe(respuesta => {
+        if (respuesta.imagen) {
+
+          resolve(respuesta.imagen)
+        } else {
+          
+          resolve(respuesta.ok+"");
+        }
+      })
+
+
+    });
+
+  
+
+  }
+
+  getEmail(){
+    return this.emailPerfil;
+
+  }
+  setEmail(email:string){
+    this.emailPerfil=email;
+  }
+
+  getUserAmigo(){
+    
+    return new Promise<Usuario>(resolve=>{
+      this.http.get<getUsuario>(`${URL}/user/getusu/${this.userAmigo._id}`).subscribe(user=>{
+
+        resolve(user.user[0]);
+      });
+
+
+    });
+    
+    //localhost:3000/user/getusu/626276d974acb01abc699544
+
+  }
+  setUserAmigo(user:Usuario){
+    this.userAmigo=user;
+  }
+
+
 }

@@ -7,6 +7,7 @@ import { PeticionesService } from '../../services/peticiones.service';
 import { ModalController } from '@ionic/angular';
 import { PopoverPerfilPage } from '../popover-perfil/popover-perfil.page';
 import { GuardadosService } from '../../services/guardados.service';
+import { LikesService } from '../../services/likes.service';
 
 @Component({
   selector: 'app-tab3',
@@ -26,7 +27,8 @@ guardados:Post[]=[];
   constructor(private userService:UsuarioService,
     private publicacionesGuardadas:GuardadosService,
     private peticionesService:PeticionesService,
-    private modalController:ModalController
+    private modalController:ModalController,
+    private likeService:LikesService
     ) {}
 
   
@@ -120,6 +122,7 @@ guardados:Post[]=[];
 
   opcionPerfil(numOpcion:number){
     this.pestania=numOpcion;
+    this.likeService.like('620cb0486e46615daab2e754','6215f21953d82c8d4b825bdbaaaa');
 
 
   }

@@ -42,5 +42,11 @@ export interface getUsuario {
     user:Usuario;
 }
 
+export interface Like {
+    ok?:     boolean;
+    usuarios?:  string[];
+    numeroLikes?:number;
+}
+
 
 

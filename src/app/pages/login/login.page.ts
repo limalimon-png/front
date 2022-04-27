@@ -6,6 +6,7 @@ import { AlertasService } from '../../services/alertas.service';
 import { Usuario } from 'src/app/interfaces/interfaces';
 import { Camera,CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { PeticionesService } from '../../services/peticiones.service';
+import { MovilStorageService } from '../../services/movil-storage.service';
 declare var window:any;
 @Component({
   selector: 'app-login',
@@ -53,6 +54,7 @@ export class LoginPage implements OnInit {
     private alertasService:AlertasService,
     private camera: Camera,
     private peticionesService:PeticionesService,
+    private movilStorage:MovilStorageService
     ) { }
 
   ngOnInit() {
@@ -74,7 +76,9 @@ export class LoginPage implements OnInit {
    this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
    if(valido){
      //entra
+     this.movilStorage.init();
      this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
+
    }else{
      //usuario y contraseña son incorrectos
      this.alertasService.presentAlert('Usuario y contraseña incorrectos');

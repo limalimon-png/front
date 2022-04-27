@@ -4,6 +4,7 @@ import { GuardadosService } from '../../services/guardados.service';
 
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
+import { MovilStorageService } from '../../services/movil-storage.service';
 
 
 @Component({
@@ -13,14 +14,27 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class PostComponent implements OnInit {
   iconoGuardado='bookmark-outline';
-  iconoLike='heart-outline'
+  iconoLike='';
   @Input() post:Post={};
   img='/assets/perro-1.jpg';
   img2='/assets/perro-2.jpg';
   img3='/assets/perro-3.jpg';
-  constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService) { }
+  constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService,private movilStorage:MovilStorageService) { }
 
+  ionViewWillEnter() {
+    const post=this.movilStorage.postLiked(this.post);
+  }
   ngOnInit() {
+    const post=this.movilStorage.postLiked(this.post);
+     
+    if(post){
+      this.iconoLike ='heart'
+      
+    }else{
+      this.iconoLike ='heart-outline';
+      
+
+    }
    this.datalocal.existePelicula(this.post._id).then(dato=>{
      if(dato)this.post.guardado=true;
    });
@@ -49,7 +63,18 @@ export class PostComponent implements OnInit {
   }
 
   like(){
+    const post=this.movilStorage.postLiked(this.post);
+     
+    if(post){
+      this.movilStorage.saveRemoveLikePost(this.post)
+      this.iconoLike ='heart-outline';
+      
+    }else{
+      this.movilStorage.saveRemoveLikePost(this.post)
+      this.iconoLike ='heart'
+      
 
+    }
   }
 
 }

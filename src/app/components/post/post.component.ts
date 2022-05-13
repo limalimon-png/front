@@ -5,6 +5,8 @@ import { GuardadosService } from '../../services/guardados.service';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { MovilStorageService } from '../../services/movil-storage.service';
+import { LikesService } from '../../services/likes.service';
+import { Usuario } from '../../interfaces/interfaces';
 
 
 @Component({
@@ -14,18 +16,26 @@ import { MovilStorageService } from '../../services/movil-storage.service';
 })
 export class PostComponent implements OnInit {
   iconoGuardado='bookmark-outline';
+  likes;
   iconoLike='';
+  usuario:Usuario
   @Input() post:Post={};
   img='/assets/perro-1.jpg';
   img2='/assets/perro-2.jpg';
   img3='/assets/perro-3.jpg';
-  constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService,private movilStorage:MovilStorageService) { }
+  constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService,private movilStorage:MovilStorageService,private likeService:LikesService) { }
 
   ionViewWillEnter() {
     const post=this.movilStorage.postLiked(this.post);
   }
   ngOnInit() {
+    this.usuario= this.us.getUsuario();
     const post=this.movilStorage.postLiked(this.post);
+    this.likeService.getLikes(this.post._id).then(respuesta=>{
+      this.likes=respuesta.numeroLikes;
+      
+    })
+
      
     if(post){
       this.iconoLike ='heart'
@@ -68,13 +78,24 @@ export class PostComponent implements OnInit {
     if(post){
       this.movilStorage.saveRemoveLikePost(this.post)
       this.iconoLike ='heart-outline';
+      this.likeService.dislike(this.usuario._id,this.post._id) 
       
     }else{
       this.movilStorage.saveRemoveLikePost(this.post)
       this.iconoLike ='heart'
+      this.likeService.like(this.usuario._id,this.post._id) 
       
 
     }
+    this.likeService.getLikes(this.post._id).then(respuesta=>{
+      this.likes=respuesta.numeroLikes;
+      console.log(respuesta.usuarios);
+      console.log('usuario le dio like');
+     
+      
+      
+      
+    })
   }
 
 }

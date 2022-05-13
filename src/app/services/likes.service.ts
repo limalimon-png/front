@@ -47,6 +47,7 @@ export class LikesService {
 
       this.http.get<Like>(`${this.URL}/likes/getlikes/${idPost}`).subscribe(respuesta => {
         console.log(respuesta);
+        respuesta.numeroLikes= respuesta.usuarios.length
 
         resolve(respuesta);
 

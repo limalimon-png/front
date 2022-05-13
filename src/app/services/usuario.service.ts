@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment.prod';
 import { promise } from 'protractor';
-import { iconoPerfil, Usuario, getUsuario } from '../interfaces/interfaces';
+import { iconoPerfil, Usuario, getUsuario, UserLiked } from '../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
 const URL = environment.url;
 @Injectable({
@@ -194,6 +194,32 @@ export class UsuarioService {
 
   }
 
+  async getUsuariosLiked(id:string){
+
+
+
+    return new Promise<UserLiked>(resolve => {
+
+     
+
+
+      this.http.get<UserLiked>(`${URL}/user/geticon/${id}`).subscribe(respuesta => {
+        if (respuesta.imagen) {
+
+          resolve(respuesta)
+        } else {
+          
+          resolve(respuesta);
+        }
+      })
+
+
+    });
+
+  
+
+  }
+
   getEmail(){
     return this.emailPerfil;
 
@@ -220,5 +246,8 @@ export class UsuarioService {
     this.userAmigo=user;
   }
 
+
+
+  
 
 }

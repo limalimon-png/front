@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.guiller.socialshare;
 
 import com.getcapacitor.BridgeActivity;
 

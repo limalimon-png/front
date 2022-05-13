@@ -48,5 +48,13 @@ export interface Like {
     numeroLikes?:number;
 }
 
+export interface UserLiked {
+    ok?:     boolean;
+    nombre?:  string;
+    imagen?:  string;
+    userId?:  string;
+
+}
+
 
 

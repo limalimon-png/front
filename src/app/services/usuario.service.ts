@@ -160,10 +160,10 @@ export class UsuarioService {
   }
 
   //cerrar sesion
-  logout(){
+  async logout(){
     this.token=null;
     this.usuario=null;
-    this.storage.clear();
+    await this.storage.clear();
     this.navController.navigateRoot('/login',{animated:true});
 
   }
@@ -203,8 +203,8 @@ export class UsuarioService {
      
 
 
-      this.http.get<UserLiked>(`${URL}/user/geticon/${id}`).subscribe(respuesta => {
-        if (respuesta.imagen) {
+      this.http.get<UserLiked>(`${URL}/user/geticonname/${id}`).subscribe(respuesta => {
+        if (respuesta.nombre) {
 
           resolve(respuesta)
         } else {
@@ -232,6 +232,20 @@ export class UsuarioService {
     
     return new Promise<Usuario>(resolve=>{
       this.http.get<getUsuario>(`${URL}/user/getusu/${this.userAmigo._id}`).subscribe(user=>{
+
+        resolve(user.user[0]);
+      });
+
+
+    });
+    
+    //localhost:3000/user/getusu/626276d974acb01abc699544
+
+  }
+  getUserAmigo2(id){
+    
+    return new Promise<Usuario>(resolve=>{
+      this.http.get<getUsuario>(`${URL}/user/getusu/${id}`).subscribe(user=>{
 
         resolve(user.user[0]);
       });

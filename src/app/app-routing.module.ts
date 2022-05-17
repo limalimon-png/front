@@ -25,7 +25,12 @@ const routes: Routes = [
   {
     path: 'perfil-amigo',
     loadChildren: () => import('./pages/perfil-amigo/perfil-amigo.module').then( m => m.PerfilAmigoPageModule)
+  },
+  {
+    path: 'modal-likes/:id',
+    loadChildren: () => import('./pages/modal-likes/modal-likes.module').then( m => m.ModalLikesPageModule)
   }
+
 
 ];
 @NgModule({

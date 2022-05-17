@@ -38,7 +38,7 @@
 
   <ion-item>
     <ion-icon slot="start" [name]="iconoLike" (click)="like()"></ion-icon>
-    <ion-card-subtitle>{{likes}} likes</ion-card-subtitle>
+    <ion-card-subtitle  (click)="pageLikes()">{{likes}} likes</ion-card-subtitle>
     <ion-icon slot="end" [name]="post.guardado?'bookmark':'bookmark-outline'" (click)="guardar()"></ion-icon>
   </ion-item>
   <ion-item lines="none" class="radio2">

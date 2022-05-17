@@ -72,18 +72,18 @@ export class PostComponent implements OnInit {
     this.ruta.navigate(['/perfil-amigo']);
   }
 
-  like(){
+  async like(){
     const post=this.movilStorage.postLiked(this.post);
      
     if(post){
       this.movilStorage.saveRemoveLikePost(this.post)
       this.iconoLike ='heart-outline';
-      this.likeService.dislike(this.usuario._id,this.post._id) 
+       await this.likeService.dislike(this.usuario._id,this.post._id) 
       
     }else{
       this.movilStorage.saveRemoveLikePost(this.post)
       this.iconoLike ='heart'
-      this.likeService.like(this.usuario._id,this.post._id) 
+      await this.likeService.like(this.usuario._id,this.post._id) 
       
 
     }
@@ -96,6 +96,11 @@ export class PostComponent implements OnInit {
       
       
     })
+  }
+
+  pageLikes(){
+    
+    this.ruta.navigate(['/modal-likes/'+this.post._id]);
   }
 
 }

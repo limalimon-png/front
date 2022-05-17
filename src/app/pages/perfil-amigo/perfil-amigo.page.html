@@ -1,24 +1,24 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start" >
+      <ion-back-button  defaultHref="/" text="" class="izquierda"></ion-back-button>
     </ion-buttons>
-    <ion-title>perfilAmigo</ion-title>
+    <ion-title class="back">Perfil Amigo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <div >
+  <div class="sincolor" >
    
     
   
-    <ion-list>
+    <ion-list class="sincolor">
       
         
-      <ion-grid fixed>
+      <ion-grid fixed class="sincolor">
         <ion-row>
-          <ion-item lines="none">
+          <ion-item lines="none" class="sincolor">
             <ion-avatar slot="start">
               <img src="{{usuario.imagen }}" />
             </ion-avatar>
@@ -42,7 +42,7 @@
 
 
 
-<ion-item>
+<ion-item class="sincolor">
   <div class="center">
   <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(1)" >
     <ion-label> </ion-label>

@@ -1,9 +1,13 @@
 <ion-header no-border>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
+    <img src="assets/icon/favicon.png" alt="" slot="start" class="izquierda">
+    <ion-title class="back">
+      Perfil
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()"
                   color="danger">
-        <ion-icon slot="icon-only" name="exit"></ion-icon>
+        <img src="assets/logout.png" alt="" class="img">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -12,16 +16,16 @@
 
 <ion-content>
 
-  <div >
+  <div class="sincolor">
    
     
   
-    <ion-list>
+    <ion-list class="sincolor">
       
         
-      <ion-grid fixed>
+      <ion-grid fixed class="sincolor">
         <ion-row>
-          <ion-item lines="none">
+          <ion-item lines="none" class="sincolor">
             <ion-avatar slot="start">
               <img [src]="usuario.imagen " />
             </ion-avatar>
@@ -40,37 +44,48 @@
       </ion-grid>
      
     
-    </ion-list>
+    </ion-list >
   </div>
-<ion-card>
+  <ion-item class="sincolor" lines="none"  >
   
-  <ion-button (click)="editarPerfil()" expand="block" fill="clear" shape="round" class="letra">
-    <div class="icon"></div>
-    editar perfil
+
+  <div class="center"  >
+<ion-chip color="primary" mode="ios" outline="false" class="masgrande" >
+
+
+  
+  <ion-button (click)="editarPerfil()" expand="block" fill="clear" shape="round"  mode="ios" class="masgrande2">
+  <ion-item lines="none" class="no">
+    
+    <img src="assets/bebida-de-coco.png" alt="" slot="start">
+    
+    <ion-label class="letra"><strong> Editar perfil</strong></ion-label>
+  </ion-item>
+
   </ion-button>
-</ion-card>
-
-
-<ion-item>
+</ion-chip>
+</div>
+</ion-item >
+<ion-item class="sincolor">
   <div class="center">
-  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(1)" >
+  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(1)" [ngClass]="{seleccionado: pestania==1}" >
     <ion-label> </ion-label>
     <ion-icon name="image-outline"></ion-icon>
     <ion-label> </ion-label>
   </ion-chip>
-  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(2)">
+  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(2)" [ngClass]="{seleccionado: pestania==2}">
     <ion-label> </ion-label>
-    <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-    <ion-label> </ion-label>
-  </ion-chip>
-  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(3)">
-    <ion-label> </ion-label>
-    <ion-icon name="heart-outline"></ion-icon>
+    <ion-icon name="chatbubble-ellipses-outline" ></ion-icon>
     <ion-label> </ion-label>
   </ion-chip>
-  <ion-chip color="primary" mode="ios" outline="true"(click)="opcionPerfil(4)">
+  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(3)"  [ngClass]="{seleccionado: pestania==3}">
     <ion-label> </ion-label>
-    <ion-icon name="bookmark-outline"></ion-icon>
+    <ion-icon name="heart-outline" ></ion-icon>
+    <ion-label> </ion-label>
+  </ion-chip>
+  <ion-chip color="primary" mode="ios" outline="true"(click)="opcionPerfil(4)"  [ngClass]="{seleccionado: pestania==4}">
+    <ion-label> </ion-label>
+    <ion-icon name="bookmark-outline" ></ion-icon>
     <ion-label> </ion-label>
   </ion-chip>
 </div>
@@ -89,8 +104,43 @@
 
 <!-- post -->
 <app-posts [posts]="posts" *ngIf="pestania==1"></app-posts>
+<!-- mensaje no hay publicaciones -->
+<!-- No hay publicaiones todavía -->
+
+<div  *ngIf="posts.length==0 && pestania==1 " >
+  <br>
+  <br>
+
+    <ion-title class="centro" >No hay publicaciones todavía</ion-title>
+    <br>
+    <br>
+    <img src="assets/hoja-de-monstera.png" alt="" class="center">
+</div>
+
 <app-posts [posts]="msj"*ngIf="pestania==2"></app-posts>
+<!-- no hay comentarios todavía -->
+<div  *ngIf="msj.length==0 && pestania==2 " >
+  <br>
+  <br>
+
+    <ion-title class="centro" >No hay comentarios todavía</ion-title>
+    <br>
+    <br>
+    <img src="assets/hoja-de-monstera.png" alt="" class="center">
+</div>
+<!-- no  -->
 <app-posts [posts]="guardados"*ngIf="pestania==4"></app-posts>
+<!-- no hay guardados todavía -->
+<div  *ngIf="guardados.length==0 && pestania==4 " >
+  <br>
+  <br>
+
+    <ion-title class="centro" >No hay guardados todavía</ion-title>
+    <br>
+    <br>
+    <img src="assets/hoja-de-monstera.png" alt="" class="center">
+</div>
+
 
 
 

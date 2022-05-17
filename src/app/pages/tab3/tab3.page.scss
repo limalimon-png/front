@@ -3,27 +3,50 @@
     margin: auto;
 }
 
-.icon {
-   
-    background-image: url('/assets/cuaderno.png');
-    background-size: cover;
-    width: 30px;
-    height: 30px;
 
-}
 
-.icon:hover {
-    background-image: url('/assets/cuaderno.gif');
-    background-size: cover;
-    width: 38px;
-    height: 38px;
 
-}
-
+//https://www.flaticon.es/packs/hawaii-77
 .letra {
     color: black;
+    margin-top: 15px;
+    
 }
 
 .letra:hover {
     color: rgb(28, 57, 186);
+  
+}
+.sincolor{
+   --background: #eaf1f6 ;
+   background-color: #eaf1f6;
+}
+.no{
+    --background:#dce8f7 ;
+}
+.masgrande{
+    height: 40px;
+   
+}
+.masgrande2{
+    height: auto;
+    
+    
+}
+
+.seleccionado{
+    background-color: rgb(205, 223, 244);
+   
+    
+
+}
+
+.centro{
+    text-align: center;
+    margin: auto;
+    color: rgb(79, 79, 79);
+}
+.img{
+    width: 18px;
+    height: auto;
 }

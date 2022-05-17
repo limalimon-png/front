@@ -46,12 +46,12 @@ export class PopoverPerfilPage implements OnInit {
     
     if(actualizado){
       //se actualizo
-      this.alertService.presentToast("se actualizo")
+      this.alertService.presentToast("Se actualizó correctamente");
     
      
     }else{
       //no se pudieron guardar cambios
-      this.alertService.presentToast("no se pudieron guardar los cambios")
+      this.alertService.presentToast("No se pudieron guardar los cambios")
 
     }
   }

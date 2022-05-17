@@ -1,29 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
-  <ion-slides class="mainSlide" #slidePadre>
+  
+  <!-- espacio -->
+  <br>
+  <ion-slides class="mainSlide" #slidePadre >
     <ion-slide>
-      <form (ngSubmit)="login(fLogin)" #fLogin="ngForm"> 
-        <ion-grid fixed>
+      <form (ngSubmit)="login(fLogin)" #fLogin="ngForm" class="centrar"> 
+        <ion-grid fixed >
           <ion-row>
             <ion-col>
-              <img src="/assets/avatars/av-1.png" />
+              <ion-title>Bienvenido a SocialShare !!</ion-title><br>
+              <img src="/assets/pina.png" />
             </ion-col>
           </ion-row>
-
-          <ion-row>
+          <br>
+          <br>
+          <ion-row class="sinfondo">
             <ion-col>
-              <ion-list>
-                <ion-item>
-                  <ion-label>Email</ion-label>
-                  <ion-input name="email" type="email" required [(ngModel)]="loginUser.email"></ion-input>
+              <ion-list class="sinfondo">
+                <ion-item class="sinfondo">
+                  <ion-label class="sinfondo">Email</ion-label>
+                  <ion-input name="email" type="email" required [(ngModel)]="loginUser.email" class="sinfondo"></ion-input>
                 </ion-item>
 
-                <ion-item>
+                <ion-item class="sinfondo" lines="none">
                   <ion-label>Password</ion-label>
                   <ion-input
                     name="password"
@@ -38,8 +38,11 @@
 
           <ion-row>
             <ion-col>
-              <ion-button type="submit" color="tertiary" shape="round">
+              <ion-button type="submit"  shape="round"  class="colorpinaverde">
                 Login
+              </ion-button>
+              <ion-button   shape="round" (click)="btnRegistro()" class="colorpinarosa" >
+                sign up
               </ion-button>
             </ion-col>
           </ion-row>
@@ -48,10 +51,14 @@
     </ion-slide>
 
     <ion-slide>
+     
+      <form  (ngSubmit)="register(fRegister)" #fRegister="ngForm" class="centrar">
       <ion-grid fixed>
+        
         <ion-row>
           <ion-col>
-            <h3>Seleccione foto de perfil</h3>
+            <ion-title>Seleccione foto de perfil:</ion-title>
+             <br>
           </ion-col>
         </ion-row>
 
@@ -80,22 +87,22 @@
             </ion-slides>
           </ion-col>
         </ion-row>
-
-        <form  (ngSubmit)="register(fRegister)" #fRegister="ngForm">
+<br>
+        
           <ion-row>
             <ion-col>
-              <ion-list>
-                <ion-item>
+              <ion-list class="sinfondo">
+                <ion-item class="sinfondo">
                   <ion-label>Email</ion-label>
                   <ion-input name="email" type="email" required [(ngModel)]="registerUser.email"></ion-input>
                 </ion-item>
 
-                <ion-item>
+                <ion-item class="sinfondo">
                   <ion-label>Nombre</ion-label>
                   <ion-input name="nombre" type="text" required [(ngModel)]="registerUser.nombre"></ion-input>
                 </ion-item>
 
-                <ion-item>
+                <ion-item class="sinfondo" lines="none">
                   <ion-label>Password</ion-label>
                   <ion-input
                     name="password"
@@ -109,18 +116,22 @@
 
           <ion-row>
             <ion-col>
-              <ion-button type="submit" color="tertiary" shape="round">
+              <ion-button   shape="round" class="colorpinarosa" (click)="btnLogin()">
+                Volver
+              </ion-button>
+              <ion-button type="submit"  shape="round" class="colorpinaverde">
                 Crear usuario
               </ion-button>
             </ion-col>
           </ion-row>
-        </form>
+        
       </ion-grid>
+    </form>
     </ion-slide>
   </ion-slides>
 </ion-content>
 
-<ion-footer no-border>
+<!-- <ion-footer no-border>
   <ion-toolbar>
     <ion-row>
       <ion-col>
@@ -153,4 +164,4 @@
       </ion-col>
     </ion-row>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

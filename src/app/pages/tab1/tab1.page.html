@@ -1,12 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-     Global
+<ion-header class="back" class="header">
+  <ion-toolbar class="back2" mode="ios" >
+    <img src="/assets/icon/favicon.png" alt="" slot="start" class="izquierda">
+    <ion-title class="back"><strong>SocialShare</strong>
+     
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  
   <!-- refresher -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>

@@ -122,7 +122,7 @@ guardados:Post[]=[];
 
   opcionPerfil(numOpcion:number){
     this.pestania=numOpcion;
-    this.likeService.like('620cb0486e46615daab2e754','6215f21953d82c8d4b825bdbaaaa');
+    this.likeService.like(this.usuario._id,'6215f21953d82c8d4b825bdbaaaa');
 
 
   }

@@ -26,6 +26,15 @@ export class PeticionesService {
     return this.http.get<Respuesta>(`${this.URL}/posts?pagina=${this.paginaPost}`);
   }
 
+  getPost(id:string){
+    return new Promise<Post>(resolve=>{
+      this.http.get<Post>(`${this.URL}/posts/perfil2/${id}`).subscribe(post=>{
+        resolve(post);
+      })
+    })
+  
+  }
+
   crearPost(post){
     const headers=new HttpHeaders({
       'x-token':this.userService.token

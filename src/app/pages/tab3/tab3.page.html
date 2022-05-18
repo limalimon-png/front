@@ -96,9 +96,9 @@
 
 
 
-<ion-refresher slot="fixed" >
+<!-- <ion-refresher slot="fixed" >
   <ion-refresher-content></ion-refresher-content>
-</ion-refresher>
+</ion-refresher> -->
 
 
 
@@ -128,6 +128,18 @@
     <br>
     <img src="assets/hoja-de-monstera.png" alt="" class="center">
 </div>
+
+<app-posts [posts]="likes"*ngIf="pestania==3"></app-posts>
+<!-- no hay comentarios todavía -->
+<div  *ngIf="msj.length==0 && pestania==3 " >
+  <br>
+  <br>
+
+    <ion-title class="centro" >No te gusta nada todavía</ion-title>
+    <br>
+    <br>
+    <img src="assets/hoja-de-monstera.png" alt="" class="center">
+</div>
 <!-- no  -->
 <app-posts [posts]="guardados"*ngIf="pestania==4"></app-posts>
 <!-- no hay guardados todavía -->
@@ -145,9 +157,9 @@
 
 
 <!-- infinite scroll -->
-<ion-infinite-scroll [disabled]="!scrollable" threshold="25%"  position="bottom" >
+<!-- <ion-infinite-scroll [disabled]="!scrollable" threshold="25%"  position="bottom" >
   <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
   </ion-infinite-scroll-content>
-</ion-infinite-scroll>
+</ion-infinite-scroll> -->
 
 </ion-content>

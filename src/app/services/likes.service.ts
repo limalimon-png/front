@@ -46,7 +46,7 @@ export class LikesService {
     return new Promise<Like>(resolve => {
 
       this.http.get<Like>(`${this.URL}/likes/getlikes/${idPost}`).subscribe(respuesta => {
-        console.log(respuesta);
+        //console.log(respuesta);
         respuesta.numeroLikes= respuesta.usuarios.length
 
         resolve(respuesta);
@@ -59,10 +59,10 @@ export class LikesService {
 
   getPostLike(idUser) {
 
-    return new Promise<Like>(resolve => {
+    return new Promise<any>(resolve => {
 
-      this.http.get<Like>(`${this.URL}/likes/getpostlike/${idUser}`).subscribe(respuesta => {
-        console.log(respuesta);
+      this.http.get<any>(`${this.URL}/likes/getpostlike/${idUser}`).subscribe(respuesta => {
+       // console.log(respuesta);
 
         resolve(respuesta);
 

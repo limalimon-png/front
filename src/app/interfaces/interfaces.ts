@@ -46,6 +46,7 @@ export interface Like {
     ok?:     boolean;
     usuarios?:  string[];
     numeroLikes?:number;
+  
 }
 
 export interface UserLiked {

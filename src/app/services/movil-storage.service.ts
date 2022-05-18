@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Like, Post } from '../interfaces/interfaces';
 import { LikesService } from './likes.service';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovilStorageService {
+ 
   private _storage: Storage | null = null;
   private localPostLike : Post[]=[]
 
@@ -16,8 +18,7 @@ export class MovilStorageService {
   // }
 
   constructor(private storage: Storage,
-    private likeService:LikesService
-    ) {
+    private likeService:LikesService,    ) {
     this.init();
    }
 
@@ -43,6 +44,8 @@ export class MovilStorageService {
  }
 
  async cargarPostLike(){
+
+
    try{
      const posts=await this._storage.get('likes');
      this.localPostLike=posts||[];
@@ -58,8 +61,37 @@ export class MovilStorageService {
  }
 
  postLiked(post:Post){
+ 
+   
+   
    return !!this.localPostLike.find(local=>local._id===post._id);
  }
  
+ async borrarLikes(){
+   await this._storage.clear();
+   this.localPostLike=[]
+ }
 
+ setPosts(posts:any) {
+  ///console.log(posts);
+  for (let index = 0; index < posts.length; index++) {
+    
+     
+   
+
+   
+      
+     if(posts[index].posts.length==1)
+    this.localPostLike.push(posts[index].posts[0]);
+    
+    if(index==posts.length-1){
+      this._storage.set('likes',this.localPostLike)
+    }
+  }
+
+
+
+  
+ 
+}
 }

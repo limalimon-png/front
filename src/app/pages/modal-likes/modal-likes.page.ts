@@ -36,9 +36,10 @@ persona:UserLiked[]=[]
   }
 
 
-  route(id){
+  async route(id){
     
-    this.userService.getUserAmigo2(id);
+    var user =await this.userService.getUserAmigo2(id);
+    this.userService.setUserAmigo(user);
     this.router.navigate(['/perfil-amigo']);
   }
 

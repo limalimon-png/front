@@ -27,7 +27,7 @@ export class Tab1Page implements OnInit {
    
     
     this.peticion.getPosts(refresh).subscribe(a=>{
-      console.log(a);
+     // console.log(a);
       this.posts.push(...a.posts);
       if(event){
         event.target.complete();
@@ -44,6 +44,8 @@ export class Tab1Page implements OnInit {
 
 
   doRefresh(event) {
+  
+    
   this.loadData(event,true);
   
     this.posts=[];

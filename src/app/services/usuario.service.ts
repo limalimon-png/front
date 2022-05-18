@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment.prod';
 import { promise } from 'protractor';
 import { iconoPerfil, Usuario, getUsuario, UserLiked } from '../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
+import { MovilStorageService } from './movil-storage.service';
 const URL = environment.url;
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class UsuarioService {
   private usuario: Usuario = {}
   private emailPerfil :string;
   userAmigo:Usuario;
+  userId;
 
-  constructor(private http: HttpClient, private storage: Storage, private navController: NavController) {
+  constructor(private http: HttpClient, private storage: Storage, private navController: NavController,private likesMovil:MovilStorageService) {
     this.storage.create();
   }
 
@@ -27,8 +29,12 @@ export class UsuarioService {
       this.http.post(`${URL}/user/login`, data).subscribe(async res => {
         console.log(res);
         if (res['ok']) {
-          console.log(res['ok'], 'en el true');
-
+          
+          
+          this.userId=await this.getUserid(res['token']);
+     
+          
+         //this.likesMovil.cargarPostLike(userId);
           await this.guardarToken(res['token']);
           resolve(true);
         } else {
@@ -64,7 +70,7 @@ export class UsuarioService {
         if (res['ok']) {
 
 
-    await      this.guardarToken(res['token']);
+    await   this.guardarToken(res['token']);
           resolve(true);
         } else {
 
@@ -165,6 +171,7 @@ export class UsuarioService {
     this.usuario=null;
     await this.storage.clear();
     this.navController.navigateRoot('/login',{animated:true});
+    this.likesMovil.borrarLikes();
 
   }
 
@@ -261,7 +268,35 @@ export class UsuarioService {
   }
 
 
+  getUserid(token){
 
-  
+    return new Promise<string>(resolve => {
+
+      //metemos los datos del header
+      const headers = new HttpHeaders({
+        'x-token': token
+      });
+
+      
+      
+
+
+      this.http.get(`${URL}/user/get`, {headers}).subscribe(respuesta => {
+        if (respuesta['ok']) {
+        
+          resolve(respuesta['usuario'])
+        } else {
+          this.navController.navigateRoot('/login')
+          resolve('');
+        }
+      })
+
+
+    });
+  }
+
+  getUseridloc(){
+    return this.userId;
+  }
 
 }

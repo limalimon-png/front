@@ -44,12 +44,12 @@
 
 <ion-item class="sincolor">
   <div class="center">
-  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(1)" >
+  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(1)" [ngClass]="{seleccionado: pestania==1}" >
     <ion-label> </ion-label>
     <ion-icon name="image-outline"></ion-icon>
     <ion-label> </ion-label>
   </ion-chip>
-  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(2)">
+  <ion-chip color="primary" mode="ios" outline="true" (click)="opcionPerfil(2)" [ngClass]="{seleccionado: pestania==2}">
     <ion-label> </ion-label>
     <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
     <ion-label> </ion-label>
@@ -63,23 +63,36 @@
 
 
 
-<ion-refresher slot="fixed" >
-  <ion-refresher-content></ion-refresher-content>
-</ion-refresher>
 
 
 
 <!-- post -->
 <app-posts [posts]="posts" *ngIf="pestania==1"></app-posts>
+
+<div  *ngIf="posts.length==0 && pestania==1 " >
+  <br>
+  <br>
+
+    <ion-title class="centro" >No hay publicaciones todavía</ion-title>
+    <br>
+    <br>
+    <img src="assets/hoja-de-monstera.png" alt="" class="center">
+</div>
+
 <app-posts [posts]="msj"*ngIf="pestania==2"></app-posts>
 
+<div  *ngIf="msj.length==0 && pestania==2 " >
+  <br>
+  <br>
+
+    <ion-title class="centro" >No hay publicaciones todavía</ion-title>
+    <br>
+    <br>
+    <img src="assets/hoja-de-monstera.png" alt="" class="center">
+</div>
 
 
 
-<!-- infinite scroll -->
-<ion-infinite-scroll [disabled]="!scrollable" threshold="25%"  position="bottom" >
-  <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-  </ion-infinite-scroll-content>
-</ion-infinite-scroll>
+
 
 </ion-content>

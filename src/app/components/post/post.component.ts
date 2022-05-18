@@ -18,6 +18,7 @@ export class PostComponent implements OnInit {
   iconoGuardado='bookmark-outline';
   likes;
   iconoLike='';
+  post2:boolean
   usuario:Usuario
   @Input() post:Post={};
   img='/assets/perro-1.jpg';
@@ -26,18 +27,26 @@ export class PostComponent implements OnInit {
   constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService,private movilStorage:MovilStorageService,private likeService:LikesService) { }
 
   ionViewWillEnter() {
-    const post=this.movilStorage.postLiked(this.post);
+  this.post2=this.movilStorage.postLiked(this.post);
+
+  console.log('entra aqui');
+  
+  
   }
   ngOnInit() {
+  
+    
     this.usuario= this.us.getUsuario();
-    const post=this.movilStorage.postLiked(this.post);
+    
+   this.post2 =this.movilStorage.postLiked(this.post);
+   //console.log('post likeado',this.post2);
     this.likeService.getLikes(this.post._id).then(respuesta=>{
       this.likes=respuesta.numeroLikes;
       
     })
 
      
-    if(post){
+    if(this.post2){
       this.iconoLike ='heart'
       
     }else{
@@ -73,9 +82,9 @@ export class PostComponent implements OnInit {
   }
 
   async like(){
-    const post=this.movilStorage.postLiked(this.post);
+    this.post2=this.movilStorage.postLiked(this.post);
      
-    if(post){
+    if(this.post2){
       this.movilStorage.saveRemoveLikePost(this.post)
       this.iconoLike ='heart-outline';
        await this.likeService.dislike(this.usuario._id,this.post._id) 

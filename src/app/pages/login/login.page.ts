@@ -7,6 +7,9 @@ import { Usuario } from 'src/app/interfaces/interfaces';
 import { Camera,CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { PeticionesService } from '../../services/peticiones.service';
 import { MovilStorageService } from '../../services/movil-storage.service';
+import { LikesService } from '../../services/likes.service';
+
+import { Like, Post } from '../../interfaces/interfaces';
 declare var window:any;
 @Component({
   selector: 'app-login',
@@ -17,7 +20,9 @@ export class LoginPage implements OnInit {
 
   @ViewChild('slidePadre', {static: true}) slidePadre:IonSlides;
   imagen:string='https://statics-cuidateplus.marca.com/cms/styles/ratio_1_1/azblob/comprar-patatas.jpg' ;
-
+userId;
+ posts:Post[]=[]
+aux:{ok:boolean,posts:string[]}
   avatars = [
     {
       img: '/assets/avatars/av-2.png',
@@ -54,7 +59,8 @@ export class LoginPage implements OnInit {
     private alertasService:AlertasService,
     private camera: Camera,
     private peticionesService:PeticionesService,
-    private movilStorage:MovilStorageService
+    private movilStorage:MovilStorageService,
+    private likeService:LikesService
     ) { }
 
   ngOnInit() {
@@ -67,17 +73,40 @@ export class LoginPage implements OnInit {
     }else return this.imagen
   }
  
+async prueba(){
 
+  this.aux.posts.forEach(async element => {
+    this.posts.push( await this.peticionesService.getPost(element));
+    
+
+    if(element==this.aux.posts[this.aux.posts.length-1]){
+      console.log('termino');
+      console.log('postsfiltrados',this.posts);
+     console.log('length',this.posts.length);
+     this.movilStorage.setPosts(this.posts);
+     this.movilStorage.init();
+     this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
+  
+    }
+   })
+}
   async login(fLogin){
     if(fLogin.invalid)return;
    const valido= await this.usuarioService.login(this.loginUser.email,this.loginUser.password);
-   console.log();
+  
    
-   this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
+   
    if(valido){
      //entra
-     this.movilStorage.init();
-     this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
+    // //  this.movilStorage.init();
+     this.userId= this.usuarioService.getUseridloc();
+     
+    this.aux=
+    await this.likeService.getPostLike(this.userId)
+    await this.prueba();
+    
+     
+     //this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
 
    }else{
      //usuario y contraseña son incorrectos

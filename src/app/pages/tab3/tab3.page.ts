@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
 import { PopoverPerfilPage } from '../popover-perfil/popover-perfil.page';
 import { GuardadosService } from '../../services/guardados.service';
 import { LikesService } from '../../services/likes.service';
+import { MovilStorageService } from '../../services/movil-storage.service';
 
 @Component({
   selector: 'app-tab3',
@@ -23,12 +24,14 @@ posts:Post[]=[];
 media:Post[]=[];
 msj:Post[]=[];
 guardados:Post[]=[];
+likes:Post[]=[];
   scrollable=true;
   constructor(private userService:UsuarioService,
     private publicacionesGuardadas:GuardadosService,
     private peticionesService:PeticionesService,
     private modalController:ModalController,
-    private likeService:LikesService
+    private likeService:LikesService,
+    private movilStorage:MovilStorageService
     ) {}
 
   
@@ -38,16 +41,11 @@ guardados:Post[]=[];
 
    this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
   
-   ;
    
-
-   console.log(this.usuario);
    this.mostrarPublicaciones();
    
-   await this.publicacionesGuardadas.cargarFavoritos().then(
-    pelis=>this.guardados=pelis
-  );
-  console.log(this.guardados);
+  
+
   //para luego mpodificar los datos de dentro usaremos en el input un [(ngmodel)]
 
 
@@ -104,9 +102,11 @@ guardados:Post[]=[];
 
 
   //para las publicaciones
-  loadData() {
+  async loadData() {
+    this.posts=[];
+    this.msj=[];
+
     this.peticionesService.getPublicacionesPerfil(this.usuario._id).subscribe(a=>{
-      console.log(a);
       this.posts.push(...a.posts.filter(f=> f.img.length !=0));
       this.msj.push(...a.posts.filter(f=> f.img.length ==0));
       //  if(event){
@@ -118,10 +118,20 @@ guardados:Post[]=[];
       // }
       
     });
+    await this.publicacionesGuardadas.cargarFavoritos().then(
+      pelis=>this.guardados=pelis);
   }
 
-  opcionPerfil(numOpcion:number){
+  async opcionPerfil(numOpcion:number){
     this.pestania=numOpcion;
+    
+    if(this.pestania==4){
+      await this.publicacionesGuardadas.cargarFavoritos().then(
+        pelis=>this.guardados=pelis);
+    }else if(this.pestania==3){
+     this.likes= this.movilStorage.getLocalPostLike()
+    }
+
     this.likeService.like(this.usuario._id,'6215f21953d82c8d4b825bdbaaaa');
 
 
@@ -129,6 +139,11 @@ guardados:Post[]=[];
  
 
 
-  
+  ionViewWillEnter() {
+    this.msj=[];
+    this.posts=[];
+
+  this.loadData();
+  }
 
 }

@@ -8,7 +8,7 @@ import { MovilStorageService } from '../../services/movil-storage.service';
 import { LikesService } from '../../services/likes.service';
 import { Usuario } from '../../interfaces/interfaces';
 
-
+declare var window:any;
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -21,9 +21,7 @@ export class PostComponent implements OnInit {
   post2:boolean
   usuario:Usuario
   @Input() post:Post={};
-  img='/assets/perro-1.jpg';
-  img2='/assets/perro-2.jpg';
-  img3='/assets/perro-3.jpg';
+  
   constructor(private datalocal:GuardadosService,private ruta:Router,private us:UsuarioService,private movilStorage:MovilStorageService,private likeService:LikesService) { }
 
   ionViewWillEnter() {
@@ -34,8 +32,8 @@ export class PostComponent implements OnInit {
   
   }
   ngOnInit() {
-  
-    
+    const img = window.Ionic.WebView.convertFileSrc( this.post.img);
+    this.post.img=img;
     this.usuario= this.us.getUsuario();
     
    this.post2 =this.movilStorage.postLiked(this.post);

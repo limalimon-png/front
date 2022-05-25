@@ -19,7 +19,7 @@ declare var window:any;
 export class LoginPage implements OnInit {
 
   @ViewChild('slidePadre', {static: true}) slidePadre:IonSlides;
-  imagen:string='https://statics-cuidateplus.marca.com/cms/styles/ratio_1_1/azblob/comprar-patatas.jpg' ;
+  imagen:string='';
 userId;
  posts:Post[]=[]
 aux:{ok:boolean,posts:string[]}
@@ -69,7 +69,7 @@ aux:{ok:boolean,posts:string[]}
 
   subirImagen(){
     if(this.imagen==''){
-      return 'av-2.png'
+      return '/assets/avatars/av-2.png'
     }else return this.imagen
   }
  
@@ -106,7 +106,7 @@ async prueba(){
     await this.prueba();
     
      
-     //this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
+     this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
 
    }else{
      //usuario y contraseña son incorrectos
@@ -174,8 +174,9 @@ galeria(){
       // If it's base64 (DATA_URL):
       const img=window.Ionic.WebView.convertFileSrc(imageData);
       console.log(img);
-      this.peticionesService.subirArchivo(imageData);
+    //  this.peticionesService.subirArchivo(imageData);
       this.imagen=img;
+      this.registerUser.imagen=img;
       
       //let base64Image = 'data:image/jpeg;base64,' + imageData;
      }, (err) => {

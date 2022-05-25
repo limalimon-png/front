@@ -7,7 +7,7 @@ export const environment = {
   
  // url:'https://data.mongodb-api.com/app/data-jmeie/endpoint/data/beta'
 //url:'http://192.168.0.22:3000'
-  url:'http://localhost:3000'
+  url:' https://f6c8-213-96-136-67.eu.ngrok.io'
 };
 
 /*

@@ -35,6 +35,33 @@ export class PeticionesService {
   
   }
 
+  actualizarPost  (post){
+    return new Promise<boolean>(resolve => {
+      
+  
+      //metemos los datos del header
+     
+
+      //añadimos el header a las opciones que tiene la peticion
+      
+
+
+      this.http.post(`${this.URL}/posts/update`, post).subscribe(respuesta => {
+        if (respuesta['ok']) {
+         console.log('resuelto');
+         
+          resolve(true)
+        } else {
+          
+          resolve(false)
+       }
+      })
+
+
+    });
+
+  }
+
   crearPost(post){
     const headers=new HttpHeaders({
       'x-token':this.userService.token
@@ -49,7 +76,7 @@ export class PeticionesService {
       this.http.post(`${this.URL}/posts`,post,{headers}).subscribe(respuesta=>{
         console.log(respuesta);
         this.nuevaPublicacion.emit(respuesta['post'])
-        resolve(true);
+        resolve(respuesta['post']);
         
       })
 

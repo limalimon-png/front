@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PeticionesService } from '../../services/peticiones.service';
 import { NavController, Platform } from '@ionic/angular';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+import { UsuarioService } from '../../services/usuario.service';
+import { Post } from 'src/app/interfaces/interfaces';
 
 
 declare var window:any;
@@ -12,24 +14,31 @@ declare var window:any;
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  tempImages:string[]=[];
- 
+  tempImages=[];
+  
+ user;
 
   post={
     mensaje:'',
-    coords:null,
-    posicion:false
+    img:[],
+    usuario:{}
+
+   
+ 
+   
   }
   constructor(
     private peticionesService:PeticionesService,
     private navCtrl:NavController,
     private camera: Camera,
+    private userService:UsuarioService
     
     
     ) {
-      this.tempImages.push('../assets/perro-1.jpg')
-      this.tempImages.push('../assets/perro-2.jpg')
-      this.tempImages.push('../assets/video.mp4')
+     this.user=this.userService.getUsuario()
+   
+      
+      
      
         
       
@@ -38,16 +47,59 @@ export class Tab2Page {
 
   async crearPost(){
     console.log(this.post);
-    const publicado =await this.peticionesService.crearPost(this.post);
+    //this.post.image= this.tempImages;
+    //console.log('imagenes',this.post.image);
+    this.post.usuario=this.user;
+    this.post.img=this.tempImages;
+    
+    const publicado:Post =await this.peticionesService.crearPost(this.post);
+
+    
     this.post={
       mensaje:'',
-      coords:null,
-      posicion:false
+      img:[],
+      usuario:{}
+ 
     }
+    publicado.img=this.tempImages;
+    this.peticionesService.actualizarPost(publicado);
+    
     this.tempImages=[];
     this.navCtrl.navigateRoot('/main/tabs/tab1')
 
     
+  }
+  camara() {
+
+    const options: CameraOptions = {
+      quality: 60,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.CAMERA
+    };
+
+    this.procesarImagen( options );
+
+  }
+  procesarImagen( options: CameraOptions ) {
+
+    this.camera.getPicture(options).then( ( imageData ) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+
+       const img = window.Ionic.WebView.convertFileSrc( imageData );
+
+      this.peticionesService.subirArchivo( imageData );
+      this.tempImages.push( img );
+      
+
+     }, (err) => {
+      // Handle error
+      console.log('error, no se pudo sacar foto',err);
+      
+     });
   }
 
   sacarFoto(){
@@ -57,8 +109,7 @@ export class Tab2Page {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.ALLMEDIA,
       correctOrientation:true,
-      //sourceType:this.camera.MediaType.ALLMEDIA,
-      //sourceType:this.camera.PictureSourceType.CAMERA,
+      
     }
     
     this.camera.getPicture(options).then((imageData) => {
@@ -66,12 +117,15 @@ export class Tab2Page {
         // If it's base64 (DATA_URL):
         const img=window.Ionic.WebView.convertFileSrc(imageData);
         console.log(img);
-        this.peticionesService.subirArchivo(imageData);
+        this.peticionesService.subirArchivo(img);
         this.tempImages.push(img);
         
-        //let base64Image = 'data:image/jpeg;base64,' + imageData;
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.peticionesService.subirArchivo(imageData);
        }, (err) => {
         // Handle error
+        console.log('error, no se pudo sacar foto',err);
+        
        });
   }
 
@@ -79,7 +133,7 @@ export class Tab2Page {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
-      mediaType: this.camera.MediaType.ALLMEDIA,
+      mediaType: this.camera.MediaType.PICTURE,
       correctOrientation:true,
       //sourceType:this.camera.MediaType.ALLMEDIA,
       sourceType:this.camera.PictureSourceType.SAVEDPHOTOALBUM,
@@ -90,7 +144,7 @@ export class Tab2Page {
         // If it's base64 (DATA_URL):
         const img=window.Ionic.WebView.convertFileSrc(imageData);
         console.log(img);
-        this.peticionesService.subirArchivo(imageData);
+        //this.peticionesService.subirArchivo(imageData);
         this.tempImages.push(img);
         
         //let base64Image = 'data:image/jpeg;base64,' + imageData;

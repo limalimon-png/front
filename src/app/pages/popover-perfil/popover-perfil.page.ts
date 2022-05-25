@@ -82,7 +82,7 @@ export class PopoverPerfilPage implements OnInit {
         // If it's base64 (DATA_URL):
         const img=window.Ionic.WebView.convertFileSrc(imageData);
         console.log(img);
-        this.peticionesService.subirArchivo(imageData);
+        //this.peticionesService.subirArchivo(imageData);
         this.imagen=img;
         
         //let base64Image = 'data:image/jpeg;base64,' + imageData;

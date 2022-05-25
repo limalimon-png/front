@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.fotosgram',
-  appName: 'fotosgram-app',
+  appId: 'io.ionic.socialshare',
+  appName: 'socialshare-app',
   webDir: 'www',
   bundledWebRuntime: false
 };

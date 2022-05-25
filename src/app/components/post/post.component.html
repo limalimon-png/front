@@ -1,49 +1,56 @@
 
 <div class="post">
-<div class="post2">
-
-  <ion-item lines="none" (click)="route()" class="radio1" >
-    <ion-avatar slot="start">
-      <img src="{{post.usuario.imagen}}" />
-    </ion-avatar>
-    <ion-label>
-      <h3>{{post.usuario.nombre}}</h3>
-      <h3>{{post.usuario.email}}</h3>
-
-    </ion-label>
-  </ion-item>
-
-  <ion-slides 
-   
-  mode="ios" pager="ios" scrollbar="ios" *ngIf="post.img.length>1">
-    <ion-slide 
-    *ngFor="let img of post.img"
-    class="image-slide" [style]="(img |imagen:post.usuario._id)|domSanitizer" id="fondo"> 
-    <div id="cabecera">
-      <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video>
-    
-     </div>
-    </ion-slide>
-    
-  </ion-slides>
-  <ion-slides  mode="ios" *ngIf="post.img.length===1">
-    <ion-slide class="image-slide" [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo" > 
+  <div class="post2">
+  
+    <ion-item lines="none" (click)="route()" class="radio1" >
+      <ion-avatar slot="start">
+        <img src="{{post.usuario.imagen}}" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{post.usuario.nombre}}</h3>
+        <h3>{{post.usuario.email}}</h3>
+  
+      </ion-label>
+    </ion-item>
+  
+    <ion-slides 
+     
+    mode="ios" pager="ios" scrollbar="ios" *ngIf="post.img.length>1">
+      <ion-slide 
+      *ngFor="let img of post.img"
+      class="image-slide"  id="fondo"> 
       <div id="cabecera">
-        <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video>
+        <!-- <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> -->
+      <img src="{{img}}" alt="">
+      
       
        </div>
-    </ion-slide>
-    
-  </ion-slides>
-
-  <ion-item>
-    <ion-icon slot="start" [name]="iconoLike" (click)="like()"></ion-icon>
-    <ion-card-subtitle  (click)="pageLikes()">{{likes}} likes</ion-card-subtitle>
-    <ion-icon slot="end" [name]="post.guardado?'bookmark':'bookmark-outline'" (click)="guardar()"></ion-icon>
-  </ion-item>
-  <ion-item lines="none" class="radio2">
-    <ion-label text-wrap>{{post.mensaje}}</ion-label>
-  </ion-item>
-</div>
-</div>
-
+      </ion-slide>
+      
+    </ion-slides>
+    <ion-slides  mode="ios" *ngIf="post.img.length===1">
+      <ion-slide class="image-slide"  [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo" > 
+        <div id="cabecera">
+          <!-- <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> -->
+        <img src="{{post.img[0]}}" alt="">
+        <img src="{{(post.img[0] |imagen:post.usuario._id)|domSanitizer}}" alt="">
+        <img src="{{(post.img[0] |imagen:post.usuario._id)}}" alt="">
+         </div>
+      </ion-slide>
+   
+      
+    </ion-slides>
+   
+    <ion-item>
+      
+      <ion-icon slot="start" [name]="iconoLike" (click)="like()"></ion-icon>
+      <ion-card-subtitle  (click)="pageLikes()">{{likes}} likes</ion-card-subtitle>
+      <ion-icon slot="end" [name]="post.guardado?'bookmark':'bookmark-outline'" (click)="guardar()"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" class="radio2">
+      <ion-label text-wrap>{{post.mensaje}}</ion-label>
+    </ion-item>
+  </div>
+  </div>
+  
+  

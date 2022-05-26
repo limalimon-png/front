@@ -18,10 +18,10 @@
     mode="ios" pager="ios" scrollbar="ios" *ngIf="post.img.length>1">
       <ion-slide 
       *ngFor="let img of post.img"
-      class="image-slide"  id="fondo"> 
+      class="image-slide"  [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo"> 
       <div id="cabecera">
         <!-- <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> -->
-      <img src="{{img}}" alt="">
+       
       
       
        </div>
@@ -32,9 +32,7 @@
       <ion-slide class="image-slide"  [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo" > 
         <div id="cabecera">
           <!-- <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> -->
-        <img src="{{post.img[0]}}" alt="">
-        <img src="{{(post.img[0] |imagen:post.usuario._id)|domSanitizer}}" alt="">
-        <img src="{{(post.img[0] |imagen:post.usuario._id)}}" alt="">
+        
          </div>
       </ion-slide>
    

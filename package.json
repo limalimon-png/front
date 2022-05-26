@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~13.2.2",
     "@angular/router": "~13.2.2",
     "@awesome-cordova-plugins/camera": "^5.40.0",
-    "@awesome-cordova-plugins/file": "^5.40.0",
+    "@awesome-cordova-plugins/file": "^5.43.0",
     "@awesome-cordova-plugins/file-transfer": "^5.40.0",
     "@capacitor/android": "3.4.3",
     "@capacitor/app": "1.1.1",

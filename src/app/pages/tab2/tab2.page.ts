@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PeticionesService } from '../../services/peticiones.service';
 import { NavController, Platform } from '@ionic/angular';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+import { Camera, CameraOptions, PictureSourceType } from '@awesome-cordova-plugins/camera/ngx';
 import { UsuarioService } from '../../services/usuario.service';
 import { Post } from 'src/app/interfaces/interfaces';
 
@@ -20,7 +20,6 @@ export class Tab2Page {
 
   post={
     mensaje:'',
-    img:[],
     usuario:{}
 
    
@@ -47,22 +46,25 @@ export class Tab2Page {
 
   async crearPost(){
     console.log(this.post);
+    console.log('crear post');
+    
+    //this.tempImages.push('https://www.divinacocina.es/wp-content/uploads/patatas-fritas-en-el-horno-2.jpg')
+    //this.peticionesService.subirArchivo('https://www.divinacocina.es/wp-content/uploads/patatas-fritas-en-el-horno-2.jpg')
     //this.post.image= this.tempImages;
     //console.log('imagenes',this.post.image);
     this.post.usuario=this.user;
-    this.post.img=this.tempImages;
+    //this.post.img=this.tempImages;
     
     const publicado:Post =await this.peticionesService.crearPost(this.post);
 
     
     this.post={
       mensaje:'',
-      img:[],
       usuario:{}
  
     }
     publicado.img=this.tempImages;
-    this.peticionesService.actualizarPost(publicado);
+    //this.peticionesService.actualizarPost(publicado);
     
     this.tempImages=[];
     this.navCtrl.navigateRoot('/main/tabs/tab1')
@@ -70,37 +72,31 @@ export class Tab2Page {
     
   }
   camara() {
-
-    const options: CameraOptions = {
-      quality: 60,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+    // capturar la imagen de la camara
+    this.procesarImagen(  PictureSourceType.CAMERA );
+  }
+  async procesarImagen( source: PictureSourceType ){
+    // configurar opciones
+    const options = {
+      quality: 80,
+      allowEditing: false,
       correctOrientation: true,
-      sourceType: this.camera.PictureSourceType.CAMERA
+      destinationType: this.camera.DestinationType.FILE_URI,
+      source,  // recibida como parametro
     };
-
-    this.procesarImagen( options );
-
-  }
-  procesarImagen( options: CameraOptions ) {
-
-    this.camera.getPicture(options).then( ( imageData ) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-
-       const img = window.Ionic.WebView.convertFileSrc( imageData );
-
-      this.peticionesService.subirArchivo( imageData );
-      this.tempImages.push( img );
-      
-
-     }, (err) => {
-      // Handle error
-      console.log('error, no se pudo sacar foto',err);
-      
-     });
-  }
+    // obtener la foto en 'image'
+    try {
+      const image = await this.camera.getPicture(options);
+      // sanitizar la url de la imagen
+     // const img = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.webPath));
+      // empujar la imagena nuestro array temporal
+      this.tempImages.push( image );
+      // llamar a servicio que sube la imagen al servidor
+      this.peticionesService.subirArchivo( image.webPath );
+    } catch ( err ) { // capturar error e indicarlo
+        console.error( err );
+      }
+    }
 
   sacarFoto(){
     const options: CameraOptions = {
@@ -130,27 +126,7 @@ export class Tab2Page {
   }
 
   galeria(){
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation:true,
-      //sourceType:this.camera.MediaType.ALLMEDIA,
-      sourceType:this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-    }
-    
-    this.camera.getPicture(options).then((imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        const img=window.Ionic.WebView.convertFileSrc(imageData);
-        console.log(img);
-        //this.peticionesService.subirArchivo(imageData);
-        this.tempImages.push(img);
-        
-        //let base64Image = 'data:image/jpeg;base64,' + imageData;
-       }, (err) => {
-        // Handle error
-       });
+    this.procesarImagen(  PictureSourceType.PHOTOLIBRARY );
   }
 
 }

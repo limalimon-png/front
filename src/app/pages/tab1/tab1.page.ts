@@ -18,6 +18,8 @@ export class Tab1Page implements OnInit {
   this.loadData();
   this.peticion.nuevaPublicacion.subscribe(publicacion=>{
     this.posts.unshift(publicacion);
+    console.log('nueva publicacion',publicacion);
+    
   })
   }
 

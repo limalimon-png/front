@@ -37,6 +37,7 @@ export class PopoverPerfilPage implements OnInit {
   //poner la validaxion que cree en la otra app
   async actualizar(parametros:NgForm){
     if(parametros.invalid){return}
+   await this.peticionesService.subirArchivo(this.imagen);
     this.usuario.imagen=this.imagen;
     console.log(this.usuario.imagen);
     

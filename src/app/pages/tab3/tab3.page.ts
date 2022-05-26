@@ -40,6 +40,7 @@ likes:Post[]=[];
    this.usuario= this.userService.getUsuario();
 
    this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+  console.log('url imagen',this.usuario.imagen);
   
    
    this.mostrarPublicaciones();

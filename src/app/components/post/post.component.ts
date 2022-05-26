@@ -32,8 +32,8 @@ export class PostComponent implements OnInit {
   
   }
   ngOnInit() {
-    const img = window.Ionic.WebView.convertFileSrc( this.post.img);
-    this.post.img=img;
+    // const img = window.Ionic.WebView.convertFileSrc( this.post.img);
+    // this.post.img=img;
     this.usuario= this.us.getUsuario();
     
    this.post2 =this.movilStorage.postLiked(this.post);

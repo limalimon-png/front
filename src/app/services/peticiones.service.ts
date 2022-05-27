@@ -120,15 +120,20 @@ private toastCtrl: ToastController
     this.loading = await this.loadingCtrl.create({
       message: 'Enviando al servidor...'
     });
+    
     //await this.loading.present();
     const blob = await fetch(webPath).then(r => r.blob());
     return new Promise<boolean> (  resolve => {
+
       // headers
       const headers = new HttpHeaders ({
         'x-token': this.userService.token
       });
+
       const formData = new FormData();
+
       formData.append('image', blob, `image.jpg`);
+      
       this.http.post<boolean>(`${ this.URL }/posts/upload`, formData, { headers })
         .pipe(
           catchError(e => this.handleError(e)),

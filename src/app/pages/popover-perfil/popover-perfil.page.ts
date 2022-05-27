@@ -5,7 +5,7 @@ import { Usuario } from 'src/app/interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
 import { AlertasService } from '../../services/alertas.service';
 import { PeticionesService } from '../../services/peticiones.service';
-import { Camera,CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+import { Camera,CameraOptions, PictureSourceType } from '@awesome-cordova-plugins/camera/ngx';
 
 declare var window:any;
 @Component({
@@ -15,6 +15,7 @@ declare var window:any;
 })
 export class PopoverPerfilPage implements OnInit {
   usuario :Usuario={}
+  imagedata;
   imagen;
   constructor(private modalController:ModalController,
     private userService:UsuarioService,
@@ -27,8 +28,11 @@ export class PopoverPerfilPage implements OnInit {
     
     
     this.usuario=this.userService.getUsuario();
-    this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
-    console.log(this.imagen);
+   this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+   //this.imagen=this.usuario.imagen; 
+   console.log('vuelve');
+   
+   console.log(this.imagen);
     console.log(this.usuario.desc);
     
    console.log(this.usuario);
@@ -37,11 +41,14 @@ export class PopoverPerfilPage implements OnInit {
   //poner la validaxion que cree en la otra app
   async actualizar(parametros:NgForm){
     if(parametros.invalid){return}
-   await this.peticionesService.subirArchivo(this.imagen);
+   //await this.peticionesService.subirArchivo(this.imagedata);
+   console.log('foto perfil antes',this.usuario.imagen);
     this.usuario.imagen=this.imagen;
     console.log(this.usuario.imagen);
     
     const actualizado =await this.userService.actualizarUsuario(this.usuario);
+    const img=this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+    console.log('foto perfil despues',img);
     
     console.log(actualizado);
     
@@ -68,30 +75,56 @@ export class PopoverPerfilPage implements OnInit {
   }
 
 
-  galeria(){
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation:true,
-      //sourceType:this.camera.MediaType.ALLMEDIA,
-      sourceType:this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-    }
+  // galeria(){
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.FILE_URI,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //     correctOrientation:true,
+  //     //sourceType:this.camera.MediaType.ALLMEDIA,
+  //     sourceType:this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+  //   }
     
-    this.camera.getPicture(options).then((imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        const img=window.Ionic.WebView.convertFileSrc(imageData);
-        console.log(img);
-        //this.peticionesService.subirArchivo(imageData);
-        this.imagen=img;
+  //   this.camera.getPicture(options).then((imageData) => {
+  //       // imageData is either a base64 encoded string or a file URI
+  //       // If it's base64 (DATA_URL):
+  //       const img=window.Ionic.WebView.convertFileSrc(imageData);
+  //       console.log(img);
+  //       //this.peticionesService.subirArchivo(imageData);
+  //       this.imagen=imageData;
         
-        //let base64Image = 'data:image/jpeg;base64,' + imageData;
-       }, (err) => {
-        // Handle error
-       });
-  }
+  //       //let base64Image = 'data:image/jpeg;base64,' + imageData;
+  //      }, (err) => {
+  //       // Handle error
+  //      });
+  // }
   
-
-  
+galeria(){
+  this.procesarImagen( PictureSourceType.CAMERA);
+}
+  async procesarImagen( source: PictureSourceType ){
+    // configurar opciones
+    const options = {
+      quality: 80,
+      allowEditing: false,
+      correctOrientation: true,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      source,  // recibida como parametro
+    };
+    // obtener la foto en 'image'
+    try {
+      const image = await this.camera.getPicture(options);
+      // sanitizar la url de la imagen
+     // const img = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.webPath));
+      // empujar la imagena nuestro array temporal
+      const img=window.Ionic.WebView.convertFileSrc(image);
+      this.imagen= img ;
+      this.imagedata=image;
+      console.log('cambiar imagen',img);
+      // llamar a servicio que sube la imagen al servidor
+      this.userService.subirArchivo( image.webPath );
+    } catch ( err ) { // capturar error e indicarlo
+        console.error( err );
+      }
+    }
 }

@@ -116,7 +116,7 @@ export class Tab2Page {
         this.peticionesService.subirArchivo(img);
         this.tempImages.push(img);
         
-        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        //let base64Image = 'data:image/jpeg;base64,' + imageData;
         this.peticionesService.subirArchivo(imageData);
        }, (err) => {
         // Handle error

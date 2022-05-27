@@ -4,8 +4,11 @@ import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment.prod';
 import { promise } from 'protractor';
 import { iconoPerfil, Usuario, getUsuario, UserLiked } from '../interfaces/interfaces';
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { MovilStorageService } from './movil-storage.service';
+import { catchError, finalize } from 'rxjs/operators';
+import { url } from 'inspector';
+import {throwError} from 'rxjs';
 const URL = environment.url;
 @Injectable({
   providedIn: 'root'
@@ -16,8 +19,13 @@ export class UsuarioService {
   private emailPerfil :string;
   userAmigo:Usuario;
   userId;
-
-  constructor(private http: HttpClient, private storage: Storage, private navController: NavController,private likesMovil:MovilStorageService) {
+loading
+  constructor(private http: HttpClient,
+     private storage: Storage,
+      private navController: NavController,
+      private likesMovil:MovilStorageService,
+      private loadingCtrl: LoadingController,
+      private toastCtrl: ToastController ) {
     this.storage.create();
   }
 
@@ -106,7 +114,7 @@ export class UsuarioService {
       
 
 
-      this.http.get(`${URL}/user/`, {headers}).subscribe(respuesta => {
+      this.http.get(`${URL}/user`, {headers}).subscribe(respuesta => {
         if (respuesta['ok']) {
           this.usuario = respuesta['usuario']
           resolve(true)
@@ -151,6 +159,86 @@ export class UsuarioService {
 
 
       this.http.post(`${URL}/user/update`, usuario,requestOptions).subscribe(respuesta => {
+        if (respuesta['ok']) {
+          this.guardarToken(respuesta['token'])
+          resolve(true)
+        } else {
+          
+          resolve(false);
+        }
+      })
+
+
+    });
+
+  }
+//subir imagen para poder actualizarla
+async subirArchivo(webPath: string) {
+  // anunciar inicio de upload al usuario
+  this.loading = await this.loadingCtrl.create({
+    message: 'Enviando al servidor...'
+  });
+
+  
+  //await this.loading.present();
+  const blob = await fetch(webPath).then(r => r.blob());
+  
+  
+  
+  return new Promise<boolean> (  resolve => {
+    // headers
+    const headers = new HttpHeaders ({
+      'x-token': this.token
+    });
+    const formData = new FormData();
+    formData.append('image', blob, `image.jpg`);
+    formData.append('id',  this.usuario._id);
+    this.http.post<boolean>(`${ URL }/user/upload`, formData, { headers })
+      .pipe(
+        catchError(e => this.handleError(e)),
+        finalize(() => this.loading.dismiss())
+      )
+      .subscribe((resp: any) => {
+        if (resp.ok){
+          this.showToast('Imagen subida correctamente');
+          resolve(true);
+        } else {
+          this.showToast('Error al subir la imagen!');
+          resolve(false);
+        }
+      });
+  });
+}
+   // manejo de errores
+   private handleError(error: any) {
+    const errMsg = error.message ? error.message : error.toString();
+    return throwError(errMsg);
+  }
+ 
+  // informar al usuario con Toast
+  private async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2500,
+      position: 'top'
+    });
+    toast.present();
+}
+  subirImagen(usuario:Usuario){
+    return new Promise<boolean>(resolve => {
+
+      //metemos los datos del header
+      const encabezadoDeLaUri = new HttpHeaders({
+        'x-token': this.token
+      });
+
+      //añadimos el header a las opciones que tiene la peticion
+      const requestOptions = {
+        headers: encabezadoDeLaUri,
+      };
+
+
+      this.http.post(`${URL}/user/upload`, FormData,requestOptions).subscribe(respuesta => {
         if (respuesta['ok']) {
           this.guardarToken(respuesta['token'])
           resolve(true)

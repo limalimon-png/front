@@ -31,10 +31,13 @@ export class PostComponent implements OnInit {
   
   
   }
-  ngOnInit() {
+  async ngOnInit() {
     // const img = window.Ionic.WebView.convertFileSrc( this.post.img);
     // this.post.img=img;
     this.usuario= this.us.getUsuario();
+    this.usuario.imagen=await this.us.getFotoPerfil(this.usuario._id);
+    console.log('imagen: ',this.post.usuario.imagen);
+    this.post.usuario.imagen=await this.us.getFotoPerfil(this.post.usuario._id);
     
    this.post2 =this.movilStorage.postLiked(this.post);
    //console.log('post likeado',this.post2);

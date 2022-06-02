@@ -132,19 +132,14 @@ async prueba(){
        if(!regexp.test(email))
      { this.alertasService.presentAlert('Formato de email incorrecto');return;}
 
-
-    //comprobar expresion regular email
+    
+    //comprobar expresion regular password
     if(!regexp2.test(password))
   
  { this.alertasService.presentAlert('Formato de contraseña incorrecto. Introduce mayúsculas, minúsculas, carácteres especiales y números (tamaño mínimo: 8)');return;}
    
     if(fRegister.invalid)return;
-    fRegister.email
 
-    //validar email
-   
-   
-   
     const valido =await this.usuarioService.crearUsuario(this.registerUser);
     if(valido){
       //entra

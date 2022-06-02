@@ -12,8 +12,11 @@
   <ion-row class="top-20">
     
     <ion-col size="12" text-center>
-      <img [src]="imagen" class="img-avatar" (click)="galeria()">
+      <img [src]="(imagen|imagenPerfil:usuario._id)|domSanitizer" class="img-avatar" (click)="galeria()">
     </ion-col>
+    <ion-button (click)="galeria()" expand="block" fill="clear" shape="round">
+      Click me
+    </ion-button>
 
   </ion-row>
 

@@ -4,7 +4,7 @@
     
     <ion-item lines="none" (click)="route()" class="radio1"  >
       <ion-avatar slot="start" >
-   <img [src]="(post.usuario.imagen|imagenPerfil:post.usuario._id)" alt="">
+   <img [src]="(post.usuario.imagen|imagenPerfil:post.usuario._id)|domSanitizer" alt="">
       </ion-avatar>
       <ion-label>
         <h3>{{post.usuario.nombre}}</h3>

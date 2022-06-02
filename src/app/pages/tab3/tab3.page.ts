@@ -9,15 +9,18 @@ import { PopoverPerfilPage } from '../popover-perfil/popover-perfil.page';
 import { GuardadosService } from '../../services/guardados.service';
 import { LikesService } from '../../services/likes.service';
 import { MovilStorageService } from '../../services/movil-storage.service';
-
+declare var window:any;
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
+
 export class Tab3Page implements OnInit{
 usuario :Usuario={}
 imagen;
+
+
 //para las publicaciones:
 pestania=1;
 posts:Post[]=[];
@@ -40,6 +43,7 @@ likes:Post[]=[];
    this.usuario= this.userService.getUsuario();
 
    this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+   this.usuario.imagen=window.Ionic.WebView.convertFileSrc(this.usuario.imagen)
   console.log('url imagen',this.usuario.imagen);
   
    

@@ -29,7 +29,7 @@ export class PopoverPerfilPage implements OnInit {
     
     this.usuario=this.userService.getUsuario();
    this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
-   //this.imagen=this.usuario.imagen; 
+   this.imagen=this.usuario.imagen; 
    console.log('vuelve');
    
    console.log(this.imagen);
@@ -47,8 +47,8 @@ export class PopoverPerfilPage implements OnInit {
     console.log(this.usuario.imagen);
     
     const actualizado =await this.userService.actualizarUsuario(this.usuario);
-    const img=this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
-    console.log('foto perfil despues',img);
+    //const img=this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+    //console.log('foto perfil despues',img);
     
     console.log(actualizado);
     
@@ -99,32 +99,63 @@ export class PopoverPerfilPage implements OnInit {
   //      });
   // }
   
+// galeria(){
+//   this.procesarImagen( PictureSourceType.CAMERA);
+// }
+//   async procesarImagen( source: PictureSourceType ){
+//     // configurar opciones
+//     const options = {
+//       quality: 80,
+//       allowEditing: false,
+//       correctOrientation: true,
+//       destinationType: this.camera.DestinationType.FILE_URI,
+//       source,  // recibida como parametro
+//     };
+//     // obtener la foto en 'image'
+//     try {
+//       const image = await this.camera.getPicture(options);
+//       // sanitizar la url de la imagen
+//      // const img = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.webPath));
+//       // empujar la imagena nuestro array temporal
+//       const img=window.Ionic.WebView.convertFileSrc(image);
+//       this.imagen= img ;
+//       this.imagedata=image;
+//       console.log('cambiar imagen',img);
+//       // llamar a servicio que sube la imagen al servidor
+//       this.userService.subirArchivo( image.webPath );
+//     } catch ( err ) { // capturar error e indicarlo
+//         console.error( err );
+//       }
+//     }
+
+
 galeria(){
-  this.procesarImagen( PictureSourceType.CAMERA);
+  const options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.ALLMEDIA,
+    correctOrientation:true,
+    
+  }
+  
+  this.camera.getPicture(options).then(async (imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      const img=window.Ionic.WebView.convertFileSrc(imageData);
+      console.log(img);
+      this.userService.subirArchivo(img);
+      this.imagen=img;
+      
+      //let base64Image = 'data:image/jpeg;base64,' + imageData;
+      await  this.userService.subirArchivo(imageData);
+      console.log('imagen actualizada',this.imagen);
+      this.imagen=this.userService.getImagenNueva();
+      
+     }, (err) => {
+      // Handle error
+      console.log('error, no se pudo sacar foto',err);
+      
+     });
 }
-  async procesarImagen( source: PictureSourceType ){
-    // configurar opciones
-    const options = {
-      quality: 80,
-      allowEditing: false,
-      correctOrientation: true,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      source,  // recibida como parametro
-    };
-    // obtener la foto en 'image'
-    try {
-      const image = await this.camera.getPicture(options);
-      // sanitizar la url de la imagen
-     // const img = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.webPath));
-      // empujar la imagena nuestro array temporal
-      const img=window.Ionic.WebView.convertFileSrc(image);
-      this.imagen= img ;
-      this.imagedata=image;
-      console.log('cambiar imagen',img);
-      // llamar a servicio que sube la imagen al servidor
-      this.userService.subirArchivo( image.webPath );
-    } catch ( err ) { // capturar error e indicarlo
-        console.error( err );
-      }
-    }
 }

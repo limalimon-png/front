@@ -8,6 +8,7 @@ import { PopoverPerfilPageRoutingModule } from './popover-perfil-routing.module'
 
 import { PopoverPerfilPage } from './popover-perfil.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ImagenPerfilPipe } from '../../pipes/imagen-perfil.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     FormsModule,
     IonicModule,
     PopoverPerfilPageRoutingModule,
-    PipesModule
+    PipesModule,
+    
   ],
   declarations: [PopoverPerfilPage]
 })

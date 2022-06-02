@@ -27,7 +27,7 @@
         <ion-row>
           <ion-item lines="none" class="sincolor">
             <ion-avatar slot="start">
-              <img [src]="(usuario.imagen|imagenPerfil:usuario._id)" alt="">
+              <img [src]="usuario.imagen|imagenSanitazer" alt="">
             </ion-avatar>
             <ion-label>
               <h3><strong>{{usuario.nombre}}</strong></h3>

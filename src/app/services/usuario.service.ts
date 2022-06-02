@@ -19,6 +19,7 @@ export class UsuarioService {
   private emailPerfil :string;
   userAmigo:Usuario;
   userId;
+  imagenNueva
 loading
   constructor(private http: HttpClient,
      private storage: Storage,
@@ -27,6 +28,9 @@ loading
       private loadingCtrl: LoadingController,
       private toastCtrl: ToastController ) {
     this.storage.create();
+  }
+  getImagenNueva(){
+    return this.imagenNueva;
   }
 
 
@@ -185,7 +189,7 @@ async subirArchivo(webPath: string) {
   
   
   
-  return new Promise<boolean> (  resolve => {
+  return new Promise<any> (  resolve => {
     // headers
     const headers = new HttpHeaders ({
       'x-token': this.token
@@ -201,7 +205,9 @@ async subirArchivo(webPath: string) {
       .subscribe((resp: any) => {
         if (resp.ok){
           this.showToast('Imagen subida correctamente');
+          this.imagenNueva=resp.nombreImagen
           resolve(true);
+
         } else {
           this.showToast('Error al subir la imagen!');
           resolve(false);

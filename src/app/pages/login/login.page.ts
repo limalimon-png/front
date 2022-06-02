@@ -119,10 +119,33 @@ async prueba(){
   }
 
   async register(fRegister){
-    if(fRegister.invalid)return;
+   var email =fRegister.form.value.email
+   var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+   //expresion regular para password
+    var regexp2 = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/);
+    var password=fRegister.form.value.password;
+    console.log(password);
     
-    const valido =await this.usuarioService.crearUsuario(this.registerUser);
 
+  
+   //comprobar expresion regular email
+       if(!regexp.test(email))
+     { this.alertasService.presentAlert('Formato de email incorrecto');return;}
+
+
+    //comprobar expresion regular email
+    if(!regexp2.test(password))
+  
+ { this.alertasService.presentAlert('Formato de contraseña incorrecto. Introduce mayúsculas, minúsculas, carácteres especiales y números (tamaño mínimo: 8)');return;}
+   
+    if(fRegister.invalid)return;
+    fRegister.email
+
+    //validar email
+   
+   
+   
+    const valido =await this.usuarioService.crearUsuario(this.registerUser);
     if(valido){
       //entra
       this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});

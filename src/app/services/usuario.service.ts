@@ -14,12 +14,14 @@ const URL = environment.url;
   providedIn: 'root'
 })
 export class UsuarioService {
+  imagenPorActualizar=''
   token: string = null;
   private usuario: Usuario = {}
   private emailPerfil :string;
   userAmigo:Usuario;
   userId;
   imagenNueva
+  contador=0;
 loading
   constructor(private http: HttpClient,
      private storage: Storage,
@@ -230,34 +232,7 @@ async subirArchivo(webPath: string) {
     });
     toast.present();
 }
-  subirImagen(usuario:Usuario){
-    return new Promise<boolean>(resolve => {
 
-      //metemos los datos del header
-      const encabezadoDeLaUri = new HttpHeaders({
-        'x-token': this.token
-      });
-
-      //añadimos el header a las opciones que tiene la peticion
-      const requestOptions = {
-        headers: encabezadoDeLaUri,
-      };
-
-
-      this.http.post(`${URL}/user/upload`, FormData,requestOptions).subscribe(respuesta => {
-        if (respuesta['ok']) {
-          this.guardarToken(respuesta['token'])
-          resolve(true)
-        } else {
-          
-          resolve(false);
-        }
-      })
-
-
-    });
-
-  }
 
   //cerrar sesion
   async logout(){
@@ -391,6 +366,55 @@ async subirArchivo(webPath: string) {
 
   getUseridloc(){
     return this.userId;
+  }
+  setImagenPorActualizar(imagen:string){
+    this.imagenPorActualizar=imagen;
+
+  }
+  async actualizarImagen(){
+if(this.contador==1)return;
+   await this.subirArchivo2(this.imagenPorActualizar);
+   this.actualizarUsuario(this.usuario);
+   this.contador=1;
+  }
+
+  async subirArchivo2(webPath: string) {
+    // anunciar inicio de upload al usuario
+    this.loading = await this.loadingCtrl.create({
+      message: 'Enviando al servidor...'
+    });
+  
+    
+    //await this.loading.present();
+    const blob = await fetch(webPath).then(r => r.blob());
+    
+    
+    
+    return new Promise<any> (  resolve => {
+      // headers
+      const headers = new HttpHeaders ({
+        'x-token': this.token
+      });
+      const formData = new FormData();
+      formData.append('image', blob, `image.jpg`);
+      formData.append('id',  this.usuario._id);
+      this.http.post<boolean>(`${ URL }/user/upload`, formData, { headers })
+        .pipe(
+          catchError(e => this.handleError(e)),
+          finalize(() => this.loading.dismiss())
+        )
+        .subscribe((resp: any) => {
+          if (resp.ok){
+          
+            this.imagenNueva=resp.nombreImagen
+            resolve(true);
+  
+          } else {
+            this.showToast('Error al subir la imagen!');
+            resolve(false);
+          }
+        });
+    });
   }
 
 }

@@ -70,7 +70,9 @@ aux:{ok:boolean,posts:string[]}
   subirImagen(){
     if(this.imagen==''){
       return '/assets/avatars/av-2.png'
-    }else return this.imagen
+    }else return this.imagen;
+      
+
   }
  
 async prueba(){
@@ -143,7 +145,12 @@ async prueba(){
     const valido =await this.usuarioService.crearUsuario(this.registerUser);
     if(valido){
       //entra
-      this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
+     
+      
+      const usu=await this.usuarioService.getUsuario();
+      console.log('usuario nuevo',usu);
+      
+       this.navCtrl.navigateRoot('/main/tabs/tab1',{animated:true});
     }else{
       //usuario y contraseña son incorrectos
       this.alertasService.presentAlert('Email en uso por favor, introduce uno nuevo');
@@ -187,14 +194,15 @@ galeria(){
     sourceType:this.camera.PictureSourceType.SAVEDPHOTOALBUM,
   }
   
-  this.camera.getPicture(options).then((imageData) => {
+  this.camera.getPicture(options).then(async (imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       const img=window.Ionic.WebView.convertFileSrc(imageData);
-      console.log(img);
+      
       //this.peticionesService.subirArchivo(imageData);
-      this.imagen=imageData;
-      this.registerUser.imagen=imageData;
+      this.imagen=img;
+      this.usuarioService.setImagenPorActualizar(img);
+     // this.registerUser.imagen=imageData;
       
       //let base64Image = 'data:image/jpeg;base64,' + imageData;
      }, (err) => {

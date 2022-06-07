@@ -1,3 +1,4 @@
+import { UsuarioService } from './../../services/usuario.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, IonRefresher } from '@ionic/angular';
 import { Post } from 'src/app/interfaces/interfaces';
@@ -14,7 +15,7 @@ export class Tab1Page implements OnInit {
   prueba=1
  
 
-  constructor(private peticion:PeticionesService) {}
+  constructor(private peticion:PeticionesService,private usu:UsuarioService) {}
   ngOnInit() {
     this.peticion.getPosts(true).subscribe(a=>{
       // console.log(a);
@@ -26,6 +27,8 @@ export class Tab1Page implements OnInit {
        
        
      });
+     this.usu.actualizarImagen();
+     
   }
 
 

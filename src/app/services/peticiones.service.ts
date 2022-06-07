@@ -83,7 +83,7 @@ private toastCtrl: ToastController
 
       this.http.post(`${this.URL}/posts`,post,{headers}).subscribe(respuesta=>{
         console.log(respuesta);
-        this.nuevaPublicacion.emit(respuesta['post'])
+        // this.nuevaPublicacion.emit(respuesta['post'])
         resolve(respuesta['post']);
         
       })
@@ -131,8 +131,10 @@ private toastCtrl: ToastController
       });
 
       const formData = new FormData();
+      let tipo='jpg';
+if(webPath.includes('mp4')){tipo='mp4'}
 
-      formData.append('image', blob, `image.jpg`);
+      formData.append('image', blob, `image.${tipo}`);
       
       this.http.post<boolean>(`${ this.URL }/posts/upload`, formData, { headers })
         .pipe(

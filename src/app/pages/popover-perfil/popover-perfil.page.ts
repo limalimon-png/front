@@ -17,6 +17,8 @@ export class PopoverPerfilPage implements OnInit {
   usuario :Usuario={}
   imagedata;
   imagen;
+  
+  cargaDeImagen=false;
   constructor(private modalController:ModalController,
     private userService:UsuarioService,
     private alertService:AlertasService,
@@ -26,16 +28,10 @@ export class PopoverPerfilPage implements OnInit {
 
   async ngOnInit() {
     
-    
     this.usuario=this.userService.getUsuario();
-   this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+  // this.imagen=await this.userService.getFotoPerfil(this.usuario._id);
    this.imagen=this.usuario.imagen; 
-   console.log('vuelve');
-   
-   console.log(this.imagen);
-    console.log(this.usuario.desc);
-    
-   console.log(this.usuario);
+ 
   }
 
   //poner la validaxion que cree en la otra app
@@ -55,7 +51,7 @@ export class PopoverPerfilPage implements OnInit {
     if(actualizado){
       //se actualizo
       this.alertService.presentToast("Se actualizó correctamente");
-    
+      this.dismiss();
      
     }else{
       //no se pudieron guardar cambios
@@ -145,12 +141,13 @@ galeria(){
       const img=window.Ionic.WebView.convertFileSrc(imageData);
       console.log(img);
       this.userService.subirArchivo(img);
+      this.cargaDeImagen=true;
       this.imagen=img;
       
       //let base64Image = 'data:image/jpeg;base64,' + imageData;
       await  this.userService.subirArchivo(imageData);
       console.log('imagen actualizada',this.imagen);
-      this.imagen=this.userService.getImagenNueva();
+      //this.imagen=this.userService.getImagenNueva();
       
      }, (err) => {
       // Handle error

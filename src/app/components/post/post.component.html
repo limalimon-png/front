@@ -4,7 +4,8 @@
     
     <ion-item lines="none" (click)="route()" class="radio1"  >
       <ion-avatar slot="start" >
-   <img [src]="(post.usuario.imagen|imagenPerfil:post.usuario._id)|domSanitizer" alt="">
+        <img *ngIf="post.usuario.imagen=='/assets/avatars/av-2.png'" src="/assets/avatars/av-2.png" alt="">
+   <img *ngIf="post.usuario.imagen!='/assets/avatars/av-2.png'" [src]="(post.usuario.imagen|imagenPerfil:post.usuario._id)" alt="">
       </ion-avatar>
       <ion-label>
         <h3>{{post.usuario.nombre}}</h3>
@@ -18,9 +19,9 @@
     mode="ios" pager="ios" scrollbar="ios" *ngIf="post.img.length>1">
       <ion-slide 
       *ngFor="let img of post.img"
-      class="image-slide"  [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo"> 
-      <div id="cabecera">
-        <!-- <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> -->
+      class="image-slide"  [style]="(img |imagen:post.usuario._id)|domSanitizer" id="fondo" > 
+      <div id="cabecera" *ngIf="!img.includes('jpg')">
+        <video [src]="(img|imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> 
        
       
       
@@ -28,12 +29,14 @@
       </ion-slide>
       
     </ion-slides>
-    <ion-slides  mode="ios" *ngIf="post.img.length===1">
-      <ion-slide class="image-slide"  [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo" > 
-        <div id="cabecera">
-          <!-- <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> -->
-        
-         </div>
+    <ion-slides   mode="ios" *ngIf="post.img.length===1" >
+      <ion-slide   class="image-slide"  [style]="(post.img[0] |imagen:post.usuario._id)|domSanitizer" id="fondo" > 
+       
+      
+        <div id="cabecera"*ngIf="!post.img[0].includes('jpg')">
+          <video [src]="(post.img[0] |imagen:post.usuario._id)" width="640" height="360" loop autoplay preload muted></video> 
+       
+        </div>
       </ion-slide>
    
       

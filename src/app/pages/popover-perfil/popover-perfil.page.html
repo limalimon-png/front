@@ -12,11 +12,18 @@
   <ion-row class="top-20">
     
     <ion-col size="12" text-center>
-      <img [src]="(imagen|imagenPerfil:usuario._id)|domSanitizer" class="img-avatar" (click)="galeria()">
+      <ng-container *ngIf="!cargaDeImagen" >
+
+        <img *ngIf="imagen=='/assets/avatars/av-2.png'" src="/assets/avatars/av-2.png" alt=""(click)="galeria()" class="img-avatar">
+        <img *ngIf="imagen!='/assets/avatars/av-2.png'" [src]="(imagen|imagenPerfil:usuario._id)" alt="" (click)="galeria()" class="img-avatar">
+      </ng-container>
+    <ng-container *ngIf="cargaDeImagen" >
+      <img [src]="imagen" class="img-avatar" (click)="galeria()"> 
+
+    </ng-container>
     </ion-col>
-    <ion-button (click)="galeria()" expand="block" fill="clear" shape="round">
-      Click me
-    </ion-button>
+
+   
 
   </ion-row>
 

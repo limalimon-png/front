@@ -20,7 +20,8 @@ export class Tab2Page {
 
   post={
     mensaje:'',
-    usuario:{}
+    usuario:{},
+    img:this.tempImages
 
    
  
@@ -45,22 +46,18 @@ export class Tab2Page {
 
 
   async crearPost(){
-    console.log(this.post);
-    console.log('crear post');
-    
-    //this.tempImages.push('https://www.divinacocina.es/wp-content/uploads/patatas-fritas-en-el-horno-2.jpg')
-    //this.peticionesService.subirArchivo('https://www.divinacocina.es/wp-content/uploads/patatas-fritas-en-el-horno-2.jpg')
-    //this.post.image= this.tempImages;
-    //console.log('imagenes',this.post.image);
+   
+   
     this.post.usuario=this.user;
-    //this.post.img=this.tempImages;
+   
     
     const publicado:Post =await this.peticionesService.crearPost(this.post);
 
     
     this.post={
       mensaje:'',
-      usuario:{}
+      usuario:{},
+      img:[]
  
     }
     publicado.img=this.tempImages;
@@ -117,7 +114,7 @@ export class Tab2Page {
         this.tempImages.push(img);
         
         //let base64Image = 'data:image/jpeg;base64,' + imageData;
-        this.peticionesService.subirArchivo(imageData);
+       // this.peticionesService.subirArchivo(imageData);
        }, (err) => {
         // Handle error
         console.log('error, no se pudo sacar foto',err);
@@ -125,8 +122,35 @@ export class Tab2Page {
        });
   }
 
-  galeria(){
+  galeria2(){
     this.procesarImagen(  PictureSourceType.PHOTOLIBRARY );
+  }
+
+  galeria(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      mediaType: this.camera.MediaType.ALLMEDIA,
+      correctOrientation:true,
+      //sourceType:this.camera.MediaType.ALLMEDIA,
+      sourceType:this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        const img=window.Ionic.WebView.convertFileSrc(imageData);
+        console.log(img);
+        this.peticionesService.subirArchivo(img);
+        this.tempImages.push(img);
+        
+        //let base64Image = 'data:image/jpeg;base64,' + imageData;
+      //  this.peticionesService.subirArchivo(imageData);
+       }, (err) => {
+        // Handle error
+        console.log('error, no se pudo sacar foto',err);
+        
+       });
   }
 
 }

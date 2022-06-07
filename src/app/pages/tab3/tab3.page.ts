@@ -43,7 +43,7 @@ likes:Post[]=[];
    this.usuario= this.userService.getUsuario();
 
    this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
-   this.usuario.imagen=window.Ionic.WebView.convertFileSrc(this.usuario.imagen)
+ //  this.usuario.imagen=window.Ionic.WebView.convertFileSrc(this.usuario.imagen)
   console.log('url imagen',this.usuario.imagen);
   
    
@@ -91,6 +91,7 @@ likes:Post[]=[];
     modal.onDidDismiss().then(async ()=>{
       this.usuario=await this.userService.getUsuario();
       this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
+      this.loadData();
       
 
     });

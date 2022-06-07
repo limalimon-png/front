@@ -22,7 +22,9 @@
     
       <ion-item (click)="route(item.userId)" lines="none" detail>
         <ion-avatar>
-          <img [src]="item.imagen" />
+          <img *ngIf="item.imagen=='/assets/avatars/av-2.png'" src="/assets/avatars/av-2.png" alt="">
+          <img *ngIf="item.imagen!='/assets/avatars/av-2.png'" [src]="(item.imagen|imagenPerfil:item.userId)" alt="">
+      
         </ion-avatar>
         <ion-card-subtitle class="nombre">{{item.nombre}}</ion-card-subtitle>
       </ion-item>

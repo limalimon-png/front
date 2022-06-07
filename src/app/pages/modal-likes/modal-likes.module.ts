@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ModalLikesPageRoutingModule } from './modal-likes-routing.module';
 
 import { ModalLikesPage } from './modal-likes.page';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalLikesPageRoutingModule
+    ModalLikesPageRoutingModule,
+    PipesModule
   ],
   declarations: [ModalLikesPage]
 })

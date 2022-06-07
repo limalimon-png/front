@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, IonRefresher } from '@ionic/angular';
 import { Post } from 'src/app/interfaces/interfaces';
 import { PeticionesService } from '../../services/peticiones.service';
 
@@ -11,21 +11,27 @@ import { PeticionesService } from '../../services/peticiones.service';
 export class Tab1Page implements OnInit {
   posts:Post[]=[];
   scrollable=true;
+  prueba=1
  
 
   constructor(private peticion:PeticionesService) {}
   ngOnInit() {
-  this.loadData();
-  this.peticion.nuevaPublicacion.subscribe(publicacion=>{
-    this.posts.unshift(publicacion);
-    console.log('nueva publicacion',publicacion);
-    
-  })
+    this.peticion.getPosts(true).subscribe(a=>{
+      // console.log(a);
+       this.posts.push(...a.posts);
+       
+         if(a.posts.length==0){
+           this.scrollable=false;
+         }
+       
+       
+     });
   }
 
 
   loadData(event?, refresh:boolean=false) {
 
+   console.log(event);
    
     
     this.peticion.getPosts(refresh).subscribe(a=>{
@@ -57,5 +63,8 @@ export class Tab1Page implements OnInit {
  
   }
 
-
+ionViewWillEnter() {
+  console.log('vuelve a entrar');
+  
+}
 }

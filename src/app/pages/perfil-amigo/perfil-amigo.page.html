@@ -20,7 +20,8 @@
         <ion-row>
           <ion-item lines="none" class="sincolor">
             <ion-avatar slot="start">
-              <img src="{{usuario.imagen }}" />
+              <img *ngIf="usuario.imagen=='/assets/avatars/av-2.png'" src="/assets/avatars/av-2.png" alt="">
+              <img *ngIf="usuario.imagen!='/assets/avatars/av-2.png'" [src]="(usuario.imagen|imagenPerfil:usuario._id)" alt="">
             </ion-avatar>
             <ion-label>
               <h3><strong>{{usuario.nombre}}</strong></h3>

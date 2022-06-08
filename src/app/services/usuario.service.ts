@@ -377,6 +377,9 @@ if(this.contador==1)return;
    this.actualizarUsuario(this.usuario);
    this.contador=1;
   }
+  setContador(){
+    this.contador=0;
+  }
 
   async subirArchivo2(webPath: string) {
     // anunciar inicio de upload al usuario

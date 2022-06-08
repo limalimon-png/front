@@ -202,6 +202,7 @@ galeria(){
       
       //this.peticionesService.subirArchivo(imageData);
       this.imagen=img;
+      this.usuarioService.setContador();
       this.usuarioService.setImagenPorActualizar(img);
      // this.registerUser.imagen=imageData;
       

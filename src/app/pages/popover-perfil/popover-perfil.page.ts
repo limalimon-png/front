@@ -150,12 +150,12 @@ galeria(){
       // If it's base64 (DATA_URL):
       const img=window.Ionic.WebView.convertFileSrc(imageData);
       console.log(img);
-      this.userService.subirArchivo(img);
+      await this.userService.subirArchivo(img);
       this.cargaDeImagen=true;
       this.imagen=img;
       
       //let base64Image = 'data:image/jpeg;base64,' + imageData;
-      await  this.userService.subirArchivo(imageData);
+     // await  this.userService.subirArchivo(imageData);
       console.log('imagen actualizada',this.imagen);
       //this.imagen=this.userService.getImagenNueva();
       

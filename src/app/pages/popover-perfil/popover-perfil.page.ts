@@ -41,7 +41,16 @@ export class PopoverPerfilPage implements OnInit {
    console.log('foto perfil antes',this.usuario.imagen);
     this.usuario.imagen=this.imagen;
     console.log(this.usuario.imagen);
-    
+    const email=await this.userService.comprobarEmail(this.usuario);
+    if(email){
+      this.alertService.presentToast("El email ya está en uso");
+      
+    }else{
+      var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+     // comprobar expresion regular email
+      if(!regexp.test(this.usuario.email))
+    { this.alertService.presentAlert('Formato de email incorrecto');return;}
+
     const actualizado =await this.userService.actualizarUsuario(this.usuario);
     //const img=this.usuario.imagen=await this.userService.getFotoPerfil(this.usuario._id);
     //console.log('foto perfil despues',img);
@@ -58,6 +67,7 @@ export class PopoverPerfilPage implements OnInit {
       this.alertService.presentToast("No se pudieron guardar los cambios")
 
     }
+  }
   }
 
   dismiss() {

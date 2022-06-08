@@ -417,4 +417,32 @@ if(this.contador==1)return;
     });
   }
 
+  comprobarEmail(usuario){
+    return new Promise<boolean>(resolve => {
+
+      //metemos los datos del header
+      const encabezadoDeLaUri = new HttpHeaders({
+        'x-token': this.token
+      });
+
+      //añadimos el header a las opciones que tiene la peticion
+      const requestOptions = {
+        headers: encabezadoDeLaUri,
+      };
+
+
+      this.http.post(`${URL}/user/email`, usuario,requestOptions).subscribe(respuesta => {
+        if (respuesta['existe']) {
+          
+          resolve(respuesta['existe'])
+        } else {
+          
+          resolve(respuesta['existe']);
+        }
+      })
+
+
+    });
+  }
+
 }
